@@ -205,7 +205,7 @@
   const vodFbConfig = {
     apiKey: 'AIzaSyB_UfOy9uRdArhuIq4DaqFhWeX-pgSJHP8',
     authDomain: 'cgcaci21.firebaseapp.com',
-    databaseURL: 'https://cgmcksko21-medsurge.firebaseio.com/',
+    databaseURL: 'https://cgcaci21.firebaseio.com',
     projectId: 'cgcaci21',
     storageBucket: 'cgcaci21.appspot.com',
     messagingSenderId: '595065889262',
@@ -384,6 +384,10 @@
         }
       });
     },
+    keyify(new_key_name) {
+      const copyKey = new_key_name.replace(/[.]/g, "_");
+      return copyKey;
+    },
   };
   const listViewRouteName = "list"
   const videoPlayerRouteName = "videoplayer"
@@ -503,7 +507,11 @@
       },
     },
     mounted() {
-      const vod_ref = vod_db.ref('vod_library').orderByChild('idx');
+      const library_id = vod_utils.keyify(window.location.pathname.split('/').slice(-1)[0])
+      const parent_vod_ref = vod_db.ref('vod_libraries').child(library_id)
+      const vod_ref = parent_vod_ref.child('vod_library').orderByChild('idx');
+      const vod_config_ref =  parent_vod_ref.child('vod_library_config')
+
       let self = this;
 
       vod_ref.on('child_added', (data) => {
@@ -521,8 +529,9 @@
         self.handle_child_removed(self.vod_sessions, new_item);
       });
 
-      const vod_config_ref =  vod_db.ref('vod_library_config')
-      vod_utils.add_listener(vod_config_ref,(val)=> self.vod_config = val)
+      vod_utils.add_listener(vod_config_ref,(val)=> {
+        self.vod_config = val != null ? val : {}
+      })
 
       // add the logo to the navbar
       $('#webNavigationTop').prepend(
