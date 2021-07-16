@@ -5,11 +5,154 @@
     color: #000;
     text-align: center;
   }
-  
+/********** On Demand Page **********/
+.logged-in.web-homescreen.nav-top
+  .on-demand-body-content
+  .webaccess-section-title {
+  display: none !important;
+}
+.logged-in.web-homescreen.nav-top #body-content.on-demand-body-content {
+  background: linear-gradient(
+      160deg,
+      rgba(1, 55, 85, 1) 10%,
+      rgba(211, 212, 225, 0.3) 58%
+    ),
+    linear-gradient(
+      200deg,
+      rgba(4, 91, 139, 1) 10%,
+      rgba(211, 212, 225, 0.3) 58%
+    );
+  margin-top: unset;
+  height: 100vh;
+}
+.on-demand-body-content #content-block {
+  background-color: unset;
+}
+.on-demand-body-content #content-block #content {
+  background-image: url(https://eventfinity-production-assets.s3.amazonaws.com/materials/970441/original/On-Demand-Pg-Bkgrnd_FIN.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  max-width: 100%;
+  height: 100%;
+}
+#body-content.on-demand-body-content #homescreen_content * {
+  background-color: unset;
+}
+#material-973781,
+#material-973781 .material-container {
+  height: 100vh;
+  min-height: unset;
+}
+#body-content.on-demand-body-content #app {
+  background-color: transparent;
+}
+#body-content.on-demand-body-content .sessions-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+#body-content.on-demand-body-content .session-container {
+  background-color: white !important;
+  margin-bottom: 35px;
+  min-width: 250px;
+  max-width: 250px;
+}
+
+#body-content.on-demand-body-content .sessions-container .vod-category-header {
+  margin: 0 auto !important;
+}
+
+#body-content.on-demand-body-content
+  .sessions-container
+  .vod-category-header
+  .vod-header-text {
+  color: white !important;
+  font-family: Arial, serif;
+}
+
+#body-content.on-demand-body-content .vod-category {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+#body-content.on-demand-body-content .session-title,
+#body-content.on-demand-body-content .session-description {
+  font-family: Arial, serif;
+  color: #003654;
+  padding: 0 10px;
+}
+#body-content.on-demand-body-content .session-title {
+  font-size: 24px;
+  text-transform: capitalize;
+}
+#body-content.on-demand-body-content .session-description {
+  font-size: 19px;
+  line-height: 25px;
+}
+#body-content.on-demand-body-content .thumbnail-container {
+  height: 141px !important;
+  width: 250px;
+  /* clip-path: polygon(0% 0%, 0% 87%, 50% 100%, 100% 87%, 100% 0%); */
+  background-position: center;
+  background-size: cover;
+}
+#body-content.on-demand-body-content .resources-section {
+  justify-content: space-around;
+}
+#body-content.on-demand-body-content .resource-item {
+  margin: 5px;
+}
+#body-content.on-demand-body-content .resource-link {
+  text-decoration-line: underline;
+  color: #002e46;
+  border: none;
+}
+
+@media (min-width: 500px) {
+  #body-content.on-demand-body-content .session-container {
+    margin: 0 15px 35px 15px;
+  }
+}
+
+/*@media (min-width: 897px) {*/
+#body-content.on-demand-body-content #homescreen_content {
+  height: calc(100vh - 175px) !important;
+  margin-top: 175px !important;
+  overflow: auto;
+  /*-webkit-mask-image: linear-gradient(0deg, black 80%, transparent);*/
+}
+#body-content.on-demand-body-content #homescreen_content * {
+  height: unset;
+}
+/* #body-content.on-demand-body-content #homescreen_content .homescreen-content {
+  /*padding-top: 100px;*/
+} */
+    
 </style>
 
 <div id="video-on-demand"></div>
 
-<!-- <script id="fb-script" src="https://firebasestorage.googleapis.com/v0/b/cgcaci21.appspot.com/o/video_on_demand%2Fvideo_on_demand.js?alt=media&token=41814f52-ffb9-4cfa-bd68-28e525e9dcd1"></script> -->
+<script>
+    const vod_firebase_config = {
+      apiKey: 'AIzaSyB_UfOy9uRdArhuIq4DaqFhWeX-pgSJHP8',
+      authDomain: 'cgcaci21.firebaseapp.com',
+      databaseURL: 'https://cgcaci21.firebaseio.com',
+      projectId: 'cgcaci21',
+      storageBucket: 'cgcaci21.appspot.com',
+      messagingSenderId: '595065889262',
+      appId: '1:595065889262:web:90fac884b0452a89b56eff',
+      measurementId: 'G-M0K5LQT39Q',
+    };
+</script>
+
+
 <!--#endregion -- end copy paste into EF  -->
+
+<!-- <script id="fb-script" src="https://firebasestorage.googleapis.com/v0/b/cgcaci21.appspot.com/o/video_on_demand%2Fvideo_on_demand.js?alt=media&token=41814f52-ffb9-4cfa-bd68-28e525e9dcd1"></script> -->
 

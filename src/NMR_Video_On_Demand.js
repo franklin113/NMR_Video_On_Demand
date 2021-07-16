@@ -2,6 +2,7 @@
 
   firebase.initializeApp(gamesConfig);
 
+  $("#body-content").addClass("on-demand-body-content")
 
 
   const vodSection = Vue.component('vod-section', {
@@ -202,17 +203,17 @@
 
   $('#video-on-demand').append(vod_template);
 
-  const vodFbConfig = {
-    apiKey: 'AIzaSyB_UfOy9uRdArhuIq4DaqFhWeX-pgSJHP8',
-    authDomain: 'cgcaci21.firebaseapp.com',
-    databaseURL: 'https://cgcaci21.firebaseio.com',
-    projectId: 'cgcaci21',
-    storageBucket: 'cgcaci21.appspot.com',
-    messagingSenderId: '595065889262',
-    appId: '1:595065889262:web:90fac884b0452a89b56eff',
-    measurementId: 'G-M0K5LQT39Q',
-  };
-  const vod_app = firebase.initializeApp(vodFbConfig, 'vod_app');
+  // const vod_firebase_config = {
+  //   apiKey: 'AIzaSyB_UfOy9uRdArhuIq4DaqFhWeX-pgSJHP8',
+  //   authDomain: 'cgcaci21.firebaseapp.com',
+  //   databaseURL: 'https://cgcaci21.firebaseio.com',
+  //   projectId: 'cgcaci21',
+  //   storageBucket: 'cgcaci21.appspot.com',
+  //   messagingSenderId: '595065889262',
+  //   appId: '1:595065889262:web:90fac884b0452a89b56eff',
+  //   measurementId: 'G-M0K5LQT39Q',
+  // };
+  const vod_app = firebase.initializeApp(vod_firebase_config, 'vod_app');
   const vod_db = firebase.database(vod_app);
   if (window.location.hostname === "localhost"){
     console.log('---------------- EMULATOR ---------------------' )
