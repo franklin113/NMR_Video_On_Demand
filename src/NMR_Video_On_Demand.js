@@ -1,6 +1,5 @@
 
 
-  firebase.initializeApp(gamesConfig);
 
   $("#body-content").addClass("on-demand-body-content")
 
@@ -223,11 +222,11 @@
     first_play: true,
     analytics_location: window.location.pathname.split('/').slice(-1)[0],
     user_data: {
-      first_name: games_user_data.first_name,
-      last_name: games_user_data.last_name,
-      email: games_user_data.email,
-      event_attendee_id: games_user_data.event_attendee_id,
-      user_type: games_user_data.additionaldata.user_type.toLowerCase().trim(),
+      first_name: vod_user_data.first_name,
+      last_name: vod_user_data.last_name,
+      email: vod_user_data.email,
+      event_attendee_id: vod_user_data.event_attendee_id,
+      user_type: vod_user_data.user_type.toLowerCase().trim(),
     },
     give_video_player_point(vimeoID, play_percent) {
       //activity, today, item, multiplier, points_arr, uid

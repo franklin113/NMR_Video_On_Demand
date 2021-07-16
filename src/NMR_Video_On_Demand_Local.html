@@ -32,7 +32,6 @@
 
       <div id="body-content" class="on-demand-body-content">
         
-            <div id="local-import-header"></div>
             <div id="local-import-body"></div>
         
       </div>
@@ -49,7 +48,6 @@
       }
 
       Promise.all([
-        load_content("#local-import-header", './page_header.html'),
         load_content("#local-import-body", './NMR_Video_On_Demand.html')
       ]).then(()=>{
         $("#vod-script").attr('src','./NMR_Video_On_Demand.js')
