@@ -50,6 +50,9 @@
   const vodList = Vue.component('vod-list',{
     template: /*html*/`
       <div id="vod-list-component">
+        <div id="vod-page-title-section">
+
+        </div>
         <section class="sessions-container">
           <div class="vod-category-wrapper" v-for="(cat, index) in categories">
             <div class="vod-category-header" >
@@ -65,14 +68,15 @@
       </div>
     `,
     props: ['sorted_vod',
-      'categories']
+      'categories','vod_config']
   })
 
   const vodPlayer = Vue.component('vod-player',{
     template: /*html*/`
-      <div>
-      <div class="back-button text-left">
-          <router-link class="back-button-link" :to="{ name : 'list' }"><i class="fas fa-arrow-left"></i> Back</router-link>
+      <div id="video-player-component">
+      <div class="back-button text-left" @click="back_button_clicked">
+          <i class="fas fa-arrow-left"></i> Back
+          <!--<router-link class="back-button-link" :to="{ name : 'list' }"> Back</router-link>-->
       </div>
       <h1 v-if="selected_video_computed.title || title">{{ title || selected_video_computed.title}}</h1>
       <b-embed
@@ -121,6 +125,9 @@
             id
           })
         });
+      },
+      back_button_clicked(){
+        this.$router.back();
       }
     },
     computed: {
@@ -171,8 +178,9 @@
   
   const vod_template = /*html*/ `
   <main id="app">
-    <router-view :ref="$route.name" :sorted_vod="sorted_vod" :categories="categories" :selected_video="selected_video" :vod_sessions="vod_sessions" @video-clicked="video_clicked"></router-view>
-
+    <transition name="routerFade" mode="out-in">
+      <router-view :ref="$route.name" :sorted_vod="sorted_vod" :categories="categories" :selected_video="selected_video" :vod_sessions="vod_sessions" @video-clicked="video_clicked"></router-view>
+    </transition>
     <div id="vod-footer">
       <p class="vod-footer-text">
         {{vod_config.footer_text || ""}}
@@ -360,6 +368,7 @@
       let new_arr = arr_as_string
         .split(',')
         .map((item) => item.trim().toLowerCase());
+      new_arr = new_arr.filter(item => item != "")
       return new_arr;
     },
 
@@ -433,12 +442,15 @@
 
         copy_of_original_videos = copy_of_original_videos.filter((item) => {
           let is_valid = false;
+
+
           let permissions_arr = vod_utils.create_comma_seperated_arr(
-            item.permissions
+            item.permissions || ""
           );
-          if (permissions_arr.includes(this.user_type) || this.user_type == "") {
+          if (permissions_arr.length == 0 || permissions_arr.includes(this.user_type) || this.user_type == "") {
             is_valid = true;
           }
+          
           if (item.idx == -100) {
             is_valid = false;
           }

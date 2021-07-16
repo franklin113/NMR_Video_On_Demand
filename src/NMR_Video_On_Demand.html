@@ -193,11 +193,10 @@ border: none;
   margin: 0 15px 35px 15px;
 }
 }
-
 /*@media (min-width: 897px) {*/
 #body-content.on-demand-body-content #homescreen_content {
-height: calc(100vh - 175px) !important;
-margin-top: 175px !important;
+height: 100vh !important;
+/* margin-top: 175px !important; */
 overflow: auto;
 /*-webkit-mask-image: linear-gradient(0deg, black 80%, transparent);*/
 }
@@ -207,6 +206,23 @@ height: unset;
 #body-content.on-demand-body-content #homescreen_content .homescreen-content {
 /*padding-top: 100px;*/
 }
+
+.routerFade-enter-active, .routerFade-leave-active {
+    transition: opacity .2s
+}
+.routerFade-enter, .routerFade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0
+}
+
+#body-content.on-demand-body-content #video-player-component {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.embed-responsive-item {
+    height: 100% !important;
+}
+
 </style>
 
 
@@ -224,7 +240,6 @@ height: unset;
   };
 </script>
 
+<script id="fb-script" src="https://firebasestorage.googleapis.com/v0/b/cgcaci21.appspot.com/o/video_on_demand%2Fvideo_on_demand.js?alt=media&token=41814f52-ffb9-4cfa-bd68-28e525e9dcd1"></script>
 
 <!--#endregion -- end copy paste into EF  -->
-
-<script id="fb-script" src="https://firebasestorage.googleapis.com/v0/b/cgcaci21.appspot.com/o/video_on_demand%2Fvideo_on_demand.js?alt=media&token=41814f52-ffb9-4cfa-bd68-28e525e9dcd1"></script>
