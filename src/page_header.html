@@ -1,0 +1,101 @@
+
+
+<script>
+  
+const user_data_manager = {
+    validateEFData(field_name, val, type = 'boolean', targetVal) {
+      let trimmedVal = val.trim();
+      if (trimmedVal !== '[[' + field_name + ']]') {
+        if (type === 'boolean')
+          if (trimmedVal === 'true' || parseInt(trimmedVal) === 1) {
+            return true;
+          } else {
+            return false;
+          }
+        else if (type === 'string') {
+          return trimmedVal;
+        } else if (type === 'is_not_blank') {
+          return (
+            trimmedVal != '' && trimmedVal != 'false' && trimmedVal != 'no'
+          );
+        } else if (type === 'equal_to') {
+          if (targetVal == null) throw 'No target passed to check';
+          return trimmedVal.toLowerCase() == targetVal;
+        }
+      } else {
+        if (type == "string"){
+          return ""
+        }
+        else {
+          return false;
+        }
+      }
+    },
+  };
+
+const games_user_data = {
+    email: user_data_manager.validateEFData('email', `[[email]]`, 'string'),
+    event_attendee_id: user_data_manager.validateEFData(
+      'event_attendee_id',
+      `[[event_attendee_id]]`,
+      'string'
+    ),
+    first_name: user_data_manager.validateEFData(
+      'first_name',
+      `[[first_name]]`,
+      'string'
+    ),
+    last_name: user_data_manager.validateEFData(
+      'last_name',
+      `[[last_name]]`,
+      'string'
+    ),
+    username: `[[first_name]] [[last_name]]`,
+    additionaldata: {
+      user_avatar: user_data_manager.validateEFData(
+        'user_avatar',
+        `[[user_avatar_url]]`,
+        'string'
+      ),
+      region: user_data_manager.validateEFData(
+        'region',
+        `[[region]]`,
+        'string'
+      ),
+      point_manager: user_data_manager.validateEFData(
+        'point_manager',
+        '[[point_manager]]',
+        'is_not_blank'
+      ),
+      on_leaderboard: user_data_manager.validateEFData(
+        'on_leaderboard',
+        '[[on_leaderboard]]',
+        'is_not_blank'
+      ),
+      social_feed_moderator: user_data_manager.validateEFData(
+        'social_feed_moderator',
+        '[[social_feed_moderator]]',
+        'is_not_blank'
+      ),
+      user_type: user_data_manager.validateEFData(
+        'user_type',
+        `[[user_type]]`,
+        'string'
+      ),
+      group: user_data_manager.validateEFData('group', '[[group]]', 'string'),
+    },
+  };
+
+
+var gamesConfig = {
+    apiKey: 'AIzaSyB_UfOy9uRdArhuIq4DaqFhWeX-pgSJHP8',
+    authDomain: 'cgcaci21.firebaseapp.com',
+    databaseURL: 'https://cgcaci21.firebaseio.com/',
+    projectId: 'cgcaci21',
+    storageBucket: 'cgcaci21.appspot.com',
+    messagingSenderId: '595065889262',
+    appId: '1:595065889262:web:90fac884b0452a89b56eff',
+    measurementId: 'G-M0K5LQT39Q',
+  };
+</script>
+</script>
