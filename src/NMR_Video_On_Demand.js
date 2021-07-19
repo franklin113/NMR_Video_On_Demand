@@ -520,7 +520,17 @@
     },
     mounted() {
       const library_id = vod_utils.keyify(window.location.pathname.split('/').slice(-1)[0])
-      const parent_vod_ref = vod_db.ref('vod_libraries').child(library_id)
+      let final_id;
+      if (library_id != "" && library_id != null){
+        final_id = library_id
+      }
+      else if ( this.$route.query.library_id != null){
+        final_id = this.$route.query.library_id
+      }
+      else {
+        final_id = null;
+      }
+      const parent_vod_ref = vod_db.ref('vod_libraries').child(final_id)
       const vod_ref = parent_vod_ref.child('vod_library').orderByChild('idx');
       const vod_config_ref =  parent_vod_ref.child('vod_library_config')
 
