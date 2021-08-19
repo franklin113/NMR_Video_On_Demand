@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-push": "gsutil -m cp -r src/NMR_Video_On_Demand.js gs://cgcaci21.appspot.com/video_on_demand/video_on_demand.js",
+    "push": "gsutil -m cp -r src/NMR_Video_On_Demand.js gs://cgcaci21.appspot.com/video_on_demand/video_on_demand.js",
     "emulators": "firebase emulators:start --export-on-exit=\"./data\" --import=\"./data\""
 
   },
