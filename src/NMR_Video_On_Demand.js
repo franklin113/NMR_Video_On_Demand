@@ -170,7 +170,7 @@ const truncate = Vue.component('truncate',{
         <div class="video-description-wrapper">
           <p class="session-description">
             <transition>
-            <truncate :truncated="false" :show="active_description_id === session.id" @toggle="$emit('description_clicked', session.id)" collapsedTextClass="collapsed-text" class="expended-text" :clamp="vod_config.desc_show_more_text" :length="vod_config.desc_truncate_length" :less="vod_config.desc_show_less_text" :text="session.description"></truncate>
+            <truncate :truncated="false" :show="active_description_id === session.id" @toggle="$emit('description_clicked', session.id)" collapsedTextClass="collapsed-text" class="expended-text" :clamp="vod_config.desc_show_more_text" :length="vod_config.desc_truncate_length" :less="vod_config.desc_show_less_text" :text="session.description || ''"></truncate>
             </transition>
           </p>
         </div>
