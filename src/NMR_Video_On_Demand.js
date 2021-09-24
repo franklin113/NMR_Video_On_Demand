@@ -154,7 +154,8 @@ const truncate = Vue.component('truncate',{
         v-for="(session,index) in vod_data"
       >
         <a class="video-click-region"
-          @click="$emit('video-clicked',session)">
+          :[getHref(session)]="session.video_url" target="_Blank"
+          @click="onVideoClick(session,index)">
           <span style="display: none" class="t-span">video-click</span>
           <div class="session-thumb-container">
             <div
@@ -203,6 +204,24 @@ const truncate = Vue.component('truncate',{
       vod_config: {
         type: Object,
         default: ()=> {}
+      }
+    },
+    computed: {
+
+    },
+    methods: {
+      onVideoClick(session) {
+        // * we are opening the video in a new tab, don't do anything with this click
+        if (session.open_in_new_tab){
+          return
+        }
+        else {
+          // * we will actually do something with the video click
+          this.$emit('video-clicked',session)
+        }
+      },
+      getHref(session){
+        return session.open_in_new_tab ? "href" : null
       }
     },
   });
