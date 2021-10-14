@@ -154,8 +154,8 @@ const vodSection = Vue.component("vod-section", {
           @click="onVideoClick(session,index)">
           <span style="display: none" class="t-span">video-click</span>
           <div class="session-thumb-container">
-            <div class="video-overlay" v-if="vod_config.no_video_overlay && !session.video_url">
-              <p class="video-overlay-text">{{vod_config.no_video_overlay || ''}}</p>
+            <div class="video-overlay" v-if="vod_config.video_overlay_text && !session.video_url">
+              <p class="video-overlay-text">{{vod_config.video_overlay_text || ''}}</p>
             </div>
             <div
               v-if="vod_config.thumbnail_tag === 'div'"
