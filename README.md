@@ -198,6 +198,3 @@ Selects an item from the built in VOD list
 ## title
 Adds a title to the page.
 
-## subtitle
-Adds a subtitle below the title.
-
