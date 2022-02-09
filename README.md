@@ -180,4 +180,20 @@ categories is an object with the category index as it's members. Each category e
 On the sheets side, this is how you'd enter it.
 |categories.0.id|categories.0.title|categories.1.id|categories.1.title |
 |-|-|-|-|
-|12|My Category|13|Second Category|					
+|12|My Category|13|Second Category|			
+
+
+# Standalone Player Page Query Parameter API
+
+## video_url
+The full url to the video, encoded
+
+## vimeo_id
+The id of the vimeo video. Must work with this:
+"https://player.vimeo.com/video/{{vimeo_id}}
+
+## id
+Selects an item from the built in VOD list
+
+
+
