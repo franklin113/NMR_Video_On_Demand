@@ -195,5 +195,9 @@ The id of the vimeo video. Must work with this:
 ## id
 Selects an item from the built in VOD list
 
+## title
+Adds a title to the page.
 
+## subtitle
+Adds a subtitle below the title.
 
