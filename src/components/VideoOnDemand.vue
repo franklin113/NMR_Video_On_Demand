@@ -3,8 +3,8 @@
     <transition name="routerFade" mode="out-in">
       <VodList
         :ref="$route.name"
-        :sorted-vod="sorted_vod"
-        :vod-config="vod_config"
+        :sorted-vod="sortedVod"
+        :vod-config="vodConfig"
         :categories="categories"
         :selected-video="selectedVideo"
         :vod-sessions="vodSessions"
@@ -14,8 +14,8 @@
       ></VodList>
       <!-- <router-view
         :ref="$route.name"
-        :sorted_vod="sorted_vod"
-        :vod_config="vod_config"
+        :sortedVod="sortedVod"
+        :vodConfig="vodConfig"
         :categories="categories"
         :selectedVideo="selectedVideo"
         :vodSessions="vodSessions"
@@ -26,11 +26,11 @@
     </transition>
     <div id="vod-footer">
       <p class="vod-footer-text">
-        {{ vod_config.footer_text || '' }}
+        {{ vodConfig.footer_text || '' }}
       </p>
     </div>
     <b-modal
-      v-if="vod_config.modal_player"
+      v-if="vodConfig.modal_player"
       ref="vod_modal"
       size="xl"
       :title="selectedVideo.title ? selectedVideo.title : ''"
@@ -65,18 +65,21 @@ export default {
       type: String,
       required: true,
     },
+    userData: {
+      type: Object,
+      required: true,
+    },
   },
   data: function () {
     return {
       vodSessions: [],
       selectedVideo: {},
-      user_type: vod_utils.user_data.user_type || '',
-      vod_config: {},
+      vodConfig: {},
       active_description_id: '',
     }
   },
   computed: {
-    sorted_vod: function () {
+    sortedVod: function () {
       let copy_of_original_videos = this.vodSessions // add a slice if we are sorting the original, we aren't yet
 
       copy_of_original_videos = copy_of_original_videos.filter((item) => {
@@ -85,8 +88,9 @@ export default {
         let permissions_arr = vod_utils.create_comma_seperated_arr(item.permissions || '')
         if (
           permissions_arr.length == 0 ||
-          permissions_arr.includes(this.user_type) ||
-          this.user_type == ''
+          permissions_arr.includes(this.userType) ||
+          this.userType == '' ||
+          this.userType == 'admin'
         ) {
           is_valid = true
         }
@@ -103,13 +107,16 @@ export default {
     categories: function () {
       const self = this
       const filtered_cats =
-        this.vod_config && this.vod_config.categories
-          ? this.vod_config.categories.filter((cat) => cat.id in self.sorted_vod)
+        this.vodConfig && this.vodConfig.categories
+          ? Object.values(this.vodConfig.categories).filter((cat) => cat.id in self.sortedVod)
           : []
       return filtered_cats
     },
     currentRouteName() {
       return this.$route.name
+    },
+    userType: function () {
+      return this.userData.userType || 'guest'
     },
   },
   mounted() {
@@ -123,8 +130,8 @@ export default {
       final_id = null
     }
     const parent_vod_ref = this.database.ref('vod_libraries').child(final_id)
-    const vod_ref = parent_vod_ref.child('vod_library').orderByChild('idx')
-    const vod_config_ref = parent_vod_ref.child('vod_library_config')
+    const vod_ref = parent_vod_ref.child('videos')
+    const vodConfig_ref = parent_vod_ref.child('config')
 
     let self = this
 
@@ -143,8 +150,8 @@ export default {
       self.handle_child_removed(self.vodSessions, new_item)
     })
 
-    vod_utils.add_listener(vod_config_ref, (val) => {
-      self.vod_config = val != null ? val : {}
+    vod_utils.add_listener(vodConfig_ref, (val) => {
+      self.vodConfig = val != null ? val : {}
     })
 
     // add the logo to the navbar
@@ -170,7 +177,7 @@ export default {
     },
     video_clicked(video_obj) {
       this.selectedVideo = Object.assign({}, video_obj)
-      if (this.vod_config.modal_player == true) {
+      if (this.vodConfig.modal_player == true) {
         this.showModal()
         this.setup_vimeo_player()
       } else {

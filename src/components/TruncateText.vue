@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: 'Truncate',
+  name: 'TruncateText',
   props: {
     truncated: {
       type: Boolean,

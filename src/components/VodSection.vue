@@ -34,7 +34,7 @@
       <div class="video-description-wrapper">
         <p class="session-description">
           <transition>
-            <truncate
+            <truncate-text
               :truncated="false"
               :show="activeDescriptionId === session.id"
               collapsed-text-class="collapsed-text"
@@ -44,7 +44,7 @@
               :less="vodConfig.desc_show_less_text"
               :text="session.description || ''"
               @toggle="$emit('description_clicked', session.id)"
-            ></truncate>
+            ></truncate-text>
           </transition>
         </p>
       </div>
@@ -64,9 +64,10 @@
 </template>
 
 <script>
+import TruncateText from '@/components/TruncateText'
 export default {
   components: {
-    truncate,
+    TruncateText,
   },
   props: {
     vodData: {
@@ -78,7 +79,7 @@ export default {
       default: '',
     },
     activeDescriptionId: {
-      type: String | Number,
+      type: String,
       default: '',
     },
     vodConfig: {

@@ -426,7 +426,7 @@ const vod_utils = {
     last_name: vod_user_data.last_name,
     email: vod_user_data.email,
     event_attendee_id: vod_user_data.event_attendee_id,
-    user_type: vod_user_data.user_type.toLowerCase().trim(),
+    userType: vod_user_data.userType.toLowerCase().trim(),
   },
   give_video_player_point(vimeoID, play_percent) {
     //activity, today, item, multiplier, points_arr, uid
@@ -631,7 +631,7 @@ const vod_vue = new Vue({
   data: {
     vod_sessions: [],
     selected_video: {},
-    user_type: vod_utils.user_data.user_type || "",
+    userType: vod_utils.user_data.userType || "",
     vod_config: {},
     active_description_id: "",
   },
@@ -647,8 +647,8 @@ const vod_vue = new Vue({
         );
         if (
           permissions_arr.length == 0 ||
-          permissions_arr.includes(this.user_type) ||
-          this.user_type == ""
+          permissions_arr.includes(this.userType) ||
+          this.userType == ""
         ) {
           is_valid = true;
         }

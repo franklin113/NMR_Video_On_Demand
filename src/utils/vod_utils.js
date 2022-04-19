@@ -1,5 +1,5 @@
 import { groupBy } from 'lodash'
-const vod_user_data = { user_type: '' }
+const vod_user_data = { userType: '' }
 const vod_utils = {
   first_play: true,
   analytics_location: window.location.pathname.split('/').slice(-1)[0],
@@ -8,7 +8,7 @@ const vod_utils = {
     last_name: vod_user_data.last_name,
     email: vod_user_data.email,
     event_attendee_id: vod_user_data.event_attendee_id,
-    user_type: vod_user_data.user_type.toLowerCase().trim(),
+    userType: vod_user_data.userType.toLowerCase().trim(),
   },
   give_video_player_point(vimeoID, play_percent) {
     //activity, today, item, multiplier, points_arr, uid

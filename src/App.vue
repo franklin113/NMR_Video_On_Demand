@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view
-      :user-data="'hello'"
+      :user-data="userData"
       :database="database"
       :vod-library-id="'253298'"
       :auth="auth"
@@ -26,6 +26,7 @@ export default {
         email: 'tim@tim.com',
         canVote: true,
         id: 'fake-user',
+        userType: 'admin',
       },
     }
   },

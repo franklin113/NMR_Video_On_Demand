@@ -7,7 +7,7 @@
           <h1 class="vod-header-text">{{ cat.title }}</h1>
         </div>
         <vod-section
-          :vod-data="sorted_vod[cat.id]"
+          :vod-data="sortedVod[cat.id]"
           :vod-config="vodConfig"
           :active-description-id="activeDescriptionId"
           @video-clicked="$emit('video-clicked', $event)"
@@ -19,7 +19,11 @@
 </template>
 
 <script>
+import VodSection from '@/components/VodSection'
 export default {
+  components: {
+    VodSection,
+  },
   props: ['sortedVod', 'categories', 'vodConfig', 'activeDescriptionId'],
 }
 </script>
