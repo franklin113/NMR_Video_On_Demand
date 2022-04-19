@@ -1,7 +1,10 @@
 <template>
-  <div @click="clicked">
-    <i v-if="active" class="fas fa-star"></i>
-    <i v-else class="far fa-star"></i>
+  <div>
+    <div class="like-count">{{ likeCount }}</div>
+    <div class="star-wrapper" @click="clicked">
+      <i v-if="active" class="fas fa-star"></i>
+      <i v-else class="far fa-star"></i>
+    </div>
   </div>
 </template>
 
@@ -18,6 +21,10 @@ export default {
       type: String,
       required: true,
     },
+    videoLikeCounters: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {}
@@ -26,11 +33,14 @@ export default {
     active: function () {
       return this.currentUserLikes[this.uid] || false
     },
+    likeCount: function () {
+      return this.videoLikeCounters ? this.videoLikeCounters[this.uid] || 0 : 0
+    },
   },
   methods: {
-    clicked() {
+    clicked: debounce(function () {
       this.$emit('click', { id: this.uid, state: !this.active })
-    },
+    }, 200),
   },
 }
 </script>

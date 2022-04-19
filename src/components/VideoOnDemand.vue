@@ -12,6 +12,7 @@
         :vod-sessions="vodSessions"
         :active-description-id="activeDescriptionId"
         :current-user-likes="currentUserLikes"
+        :video-like-counters="videoLikeCounters"
         @description-clicked="description_clicked"
         @video-clicked="video_clicked"
         @like-btn-clicked="likeButtonClicked"
@@ -25,6 +26,7 @@
         :selected-video="selectedVideo"
         :active-description-id="activeDescriptionId"
         :current-user-likes="currentUserLikes"
+        :video-like-counters="videoLikeCounters"
         @description-clicked="description_clicked"
         @video-clicked="video_clicked"
         @like-btn-clicked="likeButtonClicked"
@@ -100,6 +102,8 @@ export default {
       VIDEO_PLAYER_ROUTE_NAME,
       currentUserLikes: {},
       likedVideosRef: null,
+      videoLikeCountersRef: null,
+      videoLikeCounters: {},
     }
   },
   computed: {
@@ -166,6 +170,7 @@ export default {
     const vod_ref = parent_vod_ref.child('videos')
     const vodConfig_ref = parent_vod_ref.child('config')
     this.likedVideosRef = parent_vod_ref.child('liked-videos').child(this.userData.id)
+    this.videoLikeCountersRef = parent_vod_ref.child('video-like-counters')
     let self = this
 
     // * video on demand videos
@@ -201,6 +206,25 @@ export default {
 
     this.likedVideosRef.on('child_removed', (data) => {
       self.currentUserLikes = omit(self.currentUserLikes, data.key)
+    })
+
+    // * video like counters
+    this.videoLikeCountersRef.on('child_added', (data) => {
+      let new_item = data.val()
+      self.videoLikeCounters = Object.assign({}, self.videoLikeCounters, {
+        [data.key]: new_item,
+      })
+    })
+
+    this.videoLikeCountersRef.on('child_changed', (data) => {
+      let new_item = data.val()
+      self.videoLikeCounters = Object.assign({}, self.videoLikeCounters, {
+        [data.key]: new_item,
+      })
+    })
+
+    this.videoLikeCountersRef.on('child_removed', (data) => {
+      self.videoLikeCounters = omit(self.videoLikeCounters, data.key)
     })
 
     vod_utils.add_listener(vodConfig_ref, (val) => {
@@ -262,10 +286,13 @@ export default {
         this.activeDescriptionId = id
       }
     },
-    likeButtonClicked(eventPayload) {
-      console.log(eventPayload)
+    async likeButtonClicked(eventPayload) {
       let newVal = eventPayload.state || null
-      this.likedVideosRef.child(eventPayload.id).set(newVal)
+      let newCountIncrement = eventPayload.state ? 1 : -1
+      await this.likedVideosRef.child(eventPayload.id).set(newVal)
+      await this.videoLikeCountersRef.update({
+        [eventPayload.id]: firebase.database.ServerValue.increment(newCountIncrement),
+      })
     },
   },
 }

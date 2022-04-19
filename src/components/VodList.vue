@@ -10,6 +10,9 @@
           :vod-data="sortedVod[cat.id]"
           :vod-config="vodConfig"
           :active-description-id="activeDescriptionId"
+          :current-user-likes="currentUserLikes"
+          :video-like-counters="videoLikeCounters"
+          @like-btn-clicked="$emit('like-btn-clicked', $event)"
           @video-clicked="$emit('video-clicked', $event)"
           @description-clicked="$emit('description_clicked', $event)"
         ></vod-section>
@@ -24,7 +27,14 @@ export default {
   components: {
     VodSection,
   },
-  props: ['sortedVod', 'categories', 'vodConfig', 'activeDescriptionId'],
+  props: [
+    'sortedVod',
+    'categories',
+    'vodConfig',
+    'activeDescriptionId',
+    'currentUserLikes',
+    'videoLikeCounters',
+  ],
 }
 </script>
 

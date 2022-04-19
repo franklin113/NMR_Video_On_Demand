@@ -31,6 +31,12 @@
         </div>
         <h2 class="session-title">{{ session.title }}</h2>
       </a>
+      <LikeSection
+        :current-user-likes="currentUserLikes"
+        :video-like-counters="videoLikeCounters"
+        :uid="session.id.toString()"
+        @click="$emit('like-btn-clicked', $event)"
+      ></LikeSection>
       <div class="video-description-wrapper">
         <p class="session-description">
           <transition>
@@ -65,9 +71,12 @@
 
 <script>
 import TruncateText from '@/components/TruncateText'
+import LikeSection from '@/components/LikeSection'
+
 export default {
   components: {
     TruncateText,
+    LikeSection,
   },
   props: {
     vodData: {
@@ -83,6 +92,14 @@ export default {
       default: '',
     },
     vodConfig: {
+      type: Object,
+      default: () => {},
+    },
+    currentUserLikes: {
+      type: Object,
+      default: () => {},
+    },
+    videoLikeCounters: {
       type: Object,
       default: () => {},
     },

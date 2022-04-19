@@ -20,6 +20,7 @@
     </div>
     <LikeSection
       :current-user-likes="currentUserLikes"
+      :video-like-counters="videoLikeCounters"
       :uid="id"
       @click="$emit('like-btn-clicked', $event)"
     ></LikeSection>
@@ -44,6 +45,10 @@ export default {
       default: () => [],
     },
     currentUserLikes: {
+      type: Object,
+      default: () => {},
+    },
+    videoLikeCounters: {
       type: Object,
       default: () => {},
     },
