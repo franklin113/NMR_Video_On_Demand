@@ -18,7 +18,11 @@
     <div id="vod-description">
       <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>
     </div>
-    <LikeSection></LikeSection>
+    <LikeSection
+      :current-user-likes="currentUserLikes"
+      :uid="id"
+      @click="$emit('like-btn-clicked', $event)"
+    ></LikeSection>
   </div>
 </template>
 
@@ -38,6 +42,10 @@ export default {
     vodSessions: {
       type: Array,
       default: () => [],
+    },
+    currentUserLikes: {
+      type: Object,
+      default: () => {},
     },
   },
   data() {

@@ -11,8 +11,10 @@
         :selected-video="selectedVideo"
         :vod-sessions="vodSessions"
         :active-description-id="activeDescriptionId"
+        :current-user-likes="currentUserLikes"
         @description-clicked="description_clicked"
         @video-clicked="video_clicked"
+        @like-btn-clicked="likeButtonClicked"
       ></VodList>
       <VodPlayer
         v-else-if="vodMode === VIDEO_PLAYER_ROUTE_NAME"
@@ -22,8 +24,10 @@
         :vod-config="vodConfig"
         :selected-video="selectedVideo"
         :active-description-id="activeDescriptionId"
+        :current-user-likes="currentUserLikes"
         @description-clicked="description_clicked"
         @video-clicked="video_clicked"
+        @like-btn-clicked="likeButtonClicked"
       ></VodPlayer>
       <!-- <router-view
         :ref="$route.name"
@@ -66,7 +70,7 @@ import vod_utils from '@/utils/vod_utils'
 import VodList from '@/components/VodList'
 import VodPlayer from '@/components/VodPlayer'
 import { LIST_VIEW_ROUTE_NAME, VIDEO_PLAYER_ROUTE_NAME } from '@/router/constants'
-
+import { omit } from 'lodash'
 export default {
   components: {
     VodList,
@@ -94,6 +98,8 @@ export default {
       activeDescriptionId: '',
       LIST_VIEW_ROUTE_NAME,
       VIDEO_PLAYER_ROUTE_NAME,
+      currentUserLikes: {},
+      likedVideosRef: null,
     }
   },
   computed: {
@@ -159,9 +165,10 @@ export default {
     const parent_vod_ref = this.database.ref('vod_libraries').child(final_id)
     const vod_ref = parent_vod_ref.child('videos')
     const vodConfig_ref = parent_vod_ref.child('config')
-
+    this.likedVideosRef = parent_vod_ref.child('liked-videos').child(this.userData.id)
     let self = this
 
+    // * video on demand videos
     vod_ref.on('child_added', (data) => {
       let new_item = data.val()
       self.handle_child_added(self.vodSessions, new_item)
@@ -175,6 +182,25 @@ export default {
     vod_ref.on('child_removed', (data) => {
       let new_item = data.val()
       self.handle_child_removed(self.vodSessions, new_item)
+    })
+
+    // * user's own likes
+    this.likedVideosRef.on('child_added', (data) => {
+      let new_item = data.val()
+      self.currentUserLikes = Object.assign({}, self.currentUserLikes, {
+        [data.key]: new_item,
+      })
+    })
+
+    this.likedVideosRef.on('child_changed', (data) => {
+      let new_item = data.val()
+      self.currentUserLikes = Object.assign({}, self.currentUserLikes, {
+        [data.key]: new_item,
+      })
+    })
+
+    this.likedVideosRef.on('child_removed', (data) => {
+      self.currentUserLikes = omit(self.currentUserLikes, data.key)
     })
 
     vod_utils.add_listener(vodConfig_ref, (val) => {
@@ -235,6 +261,11 @@ export default {
       } else {
         this.activeDescriptionId = id
       }
+    },
+    likeButtonClicked(eventPayload) {
+      console.log(eventPayload)
+      let newVal = eventPayload.state || null
+      this.likedVideosRef.child(eventPayload.id).set(newVal)
     },
   },
 }
