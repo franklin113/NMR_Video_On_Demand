@@ -1,17 +1,30 @@
 <template>
   <main id="app">
-    <transition name="routerFade" mode="out-in">
+    <transition-group name="fade" mode="out-in">
       <VodList
-        :ref="$route.name"
+        v-if="vodMode === LIST_VIEW_ROUTE_NAME"
+        :key="LIST_VIEW_ROUTE_NAME"
+        :ref="LIST_VIEW_ROUTE_NAME"
         :sorted-vod="sortedVod"
         :vod-config="vodConfig"
         :categories="categories"
         :selected-video="selectedVideo"
         :vod-sessions="vodSessions"
-        :active-description_id="active_description_id"
+        :active-description-id="activeDescriptionId"
         @description-clicked="description_clicked"
         @video-clicked="video_clicked"
       ></VodList>
+      <VodPlayer
+        v-else-if="vodMode === VIDEO_PLAYER_ROUTE_NAME"
+        :key="VIDEO_PLAYER_ROUTE_NAME"
+        :ref="VIDEO_PLAYER_ROUTE_NAME"
+        :sorted-vod="sortedVod"
+        :vod-config="vodConfig"
+        :selected-video="selectedVideo"
+        :active-description-id="activeDescriptionId"
+        @description-clicked="description_clicked"
+        @video-clicked="video_clicked"
+      ></VodPlayer>
       <!-- <router-view
         :ref="$route.name"
         :sortedVod="sortedVod"
@@ -19,11 +32,11 @@
         :categories="categories"
         :selectedVideo="selectedVideo"
         :vodSessions="vodSessions"
-        :active_description_id="active_description_id"
+        :activeDescriptionId="activeDescriptionId"
         @description_clicked="description_clicked"
         @video-clicked="video_clicked"
       ></router-view> -->
-    </transition>
+    </transition-group>
     <div id="vod-footer">
       <p class="vod-footer-text">
         {{ vodConfig.footer_text || '' }}
@@ -52,9 +65,12 @@
 import vod_utils from '@/utils/vod_utils'
 import VodList from '@/components/VodList'
 import VodPlayer from '@/components/VodPlayer'
+import { LIST_VIEW_ROUTE_NAME, VIDEO_PLAYER_ROUTE_NAME } from '@/router/constants'
+
 export default {
   components: {
     VodList,
+    VodPlayer,
   },
   props: {
     database: {
@@ -75,7 +91,9 @@ export default {
       vodSessions: [],
       selectedVideo: {},
       vodConfig: {},
-      active_description_id: '',
+      activeDescriptionId: '',
+      LIST_VIEW_ROUTE_NAME,
+      VIDEO_PLAYER_ROUTE_NAME,
     }
   },
   computed: {
@@ -117,6 +135,15 @@ export default {
     },
     userType: function () {
       return this.userData.userType || 'guest'
+    },
+    vodMode: function () {
+      if (this.currentRouteName == LIST_VIEW_ROUTE_NAME) {
+        return LIST_VIEW_ROUTE_NAME
+      } else if (this.currentRouteName == VIDEO_PLAYER_ROUTE_NAME) {
+        return VIDEO_PLAYER_ROUTE_NAME
+      } else {
+        return null
+      }
     },
   },
   mounted() {
@@ -182,7 +209,7 @@ export default {
         this.setup_vimeo_player()
       } else {
         this.$router.push({
-          name: videoPlayerRouteName,
+          name: VIDEO_PLAYER_ROUTE_NAME,
           query: {
             id: this.selectedVideo.id,
           },
@@ -203,10 +230,10 @@ export default {
       })
     },
     description_clicked(id) {
-      if (this.active_description_id === id) {
-        this.active_description_id = ''
+      if (this.activeDescriptionId === id) {
+        this.activeDescriptionId = ''
       } else {
-        this.active_description_id = id
+        this.activeDescriptionId = id
       }
     },
   },

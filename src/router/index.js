@@ -1,19 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VideoOnDemand from '@/components/VideoOnDemand'
-
+import { LIST_VIEW_ROUTE_NAME, VIDEO_PLAYER_ROUTE_NAME } from './constants'
 Vue.use(VueRouter)
-const listViewRouteName = 'list'
-const videoPlayerRouteName = 'videoplayer'
+
 const routes = [
   {
     path: '/',
-    name: listViewRouteName,
+    name: LIST_VIEW_ROUTE_NAME,
     component: VideoOnDemand,
   },
   {
-    path: '/',
-    name: videoPlayerRouteName,
+    path: '/player',
+    name: VIDEO_PLAYER_ROUTE_NAME,
     component: VideoOnDemand,
   },
 ]

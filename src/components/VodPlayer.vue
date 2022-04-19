@@ -18,11 +18,18 @@
     <div id="vod-description">
       <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>
     </div>
+    <LikeSection></LikeSection>
   </div>
 </template>
 
 <script>
+import vod_utils from '@/utils/vod_utils'
+import LikeSection from '@/components/LikeSection'
+
 export default {
+  components: {
+    LikeSection,
+  },
   props: {
     selectedVideo: {
       type: Object,
