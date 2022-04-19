@@ -1,29 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import VideoOnDemand from '@/components/VideoOnDemand'
 
 Vue.use(VueRouter)
-
+const listViewRouteName = 'list'
+const videoPlayerRouteName = 'videoplayer'
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: listViewRouteName,
+    component: VideoOnDemand,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/',
+    name: videoPlayerRouteName,
+    component: VideoOnDemand,
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 export default router

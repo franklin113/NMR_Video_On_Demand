@@ -1,7 +1,7 @@
 <template>
   <div class="vod-category">
     <section
-      v-for="(session, index) in vod_data"
+      v-for="(session, index) in vodData"
       :key="index"
       class="session-container"
       :class="[session.video_url ? 'has-video-url' : 'no-video-url']"
@@ -14,16 +14,16 @@
       >
         <span style="display: none" class="t-span">video-click</span>
         <div class="session-thumb-container">
-          <div v-if="vod_config.video_overlay_text && !session.video_url" class="video-overlay">
-            <p class="video-overlay-text">{{ vod_config.video_overlay_text || '' }}</p>
+          <div v-if="vodConfig.video_overlay_text && !session.video_url" class="video-overlay">
+            <p class="video-overlay-text">{{ vodConfig.video_overlay_text || '' }}</p>
           </div>
           <div
-            v-if="vod_config.thumbnail_tag === 'div'"
+            v-if="vodConfig.thumbnail_tag === 'div'"
             :style="{ backgroundImage: 'url(' + session.thumb_with_play_button + ')' }"
             class="thumbnail-container"
           ></div>
           <img
-            v-else-if="vod_config.thumbnail_tag === 'img' || !vod_config.thumbnail_tag"
+            v-else-if="vodConfig.thumbnail_tag === 'img' || !vodConfig.thumbnail_tag"
             :src="session.thumb_with_play_button"
             alt="img"
             style="width: 100%; height: auto"
@@ -36,12 +36,12 @@
           <transition>
             <truncate
               :truncated="false"
-              :show="active_description_id === session.id"
+              :show="activeDescriptionId === session.id"
               collapsed-text-class="collapsed-text"
               class="expended-text"
-              :clamp="vod_config.desc_show_more_text"
-              :length="vod_config.desc_truncate_length"
-              :less="vod_config.desc_show_less_text"
+              :clamp="vodConfig.desc_show_more_text"
+              :length="vodConfig.desc_truncate_length"
+              :less="vodConfig.desc_show_less_text"
               :text="session.description || ''"
               @toggle="$emit('description_clicked', session.id)"
             ></truncate>
@@ -69,7 +69,7 @@ export default {
     truncate,
   },
   props: {
-    vod_data: {
+    vodData: {
       type: Array,
       default: () => [],
     },
@@ -77,11 +77,11 @@ export default {
       type: String,
       default: '',
     },
-    active_description_id: {
+    activeDescriptionId: {
       type: String | Number,
       default: '',
     },
-    vod_config: {
+    vodConfig: {
       type: Object,
       default: () => {},
     },

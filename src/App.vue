@@ -1,12 +1,31 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <router-view :user-data="'hello'" :database="database" :vod-library-id="'123'" :auth="auth" />
   </div>
 </template>
+
+<script>
+import { database, auth } from '@/firebase/firebase_config'
+
+export default {
+  name: 'App',
+  components: {},
+  data() {
+    return {
+      database,
+      auth,
+      eventId: 'In2lBGCKe8zPlYH3pCUq',
+      userData: {
+        firstName: 'Tim',
+        lastName: 'Franklin',
+        email: 'tim@tim.com',
+        canVote: true,
+        id: 'fake-user',
+      },
+    }
+  },
+}
+</script>
 
 <style>
 #app {

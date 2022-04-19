@@ -12,9 +12,13 @@
     "push": "gsutil -m cp -r src/NMR_Video_On_Demand.js gs://cgcaci21.appspot.com/video_on_demand/video_on_demand.js"
   },
   "dependencies": {
+    "bootstrap": "^5.1.3",
+    "bootstrap-vue": "^2.22.0",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11",
-    "vue-router": "^4.0.14"
+    "lodash": "^4.17.21",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.3",
+    "firebase": "^8.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",

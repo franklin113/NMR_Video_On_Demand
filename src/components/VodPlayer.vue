@@ -24,11 +24,11 @@
 <script>
 export default {
   props: {
-    selected_video: {
+    selectedVideo: {
       type: Object,
-      default: {},
+      default: () => {},
     },
-    vod_sessions: {
+    vodSessions: {
       type: Array,
       default: () => [],
     },
@@ -42,11 +42,11 @@ export default {
   },
   computed: {
     selected_video_computed() {
-      if (Object.keys(this.selected_video).length > 0) {
-        return this.selected_video
+      if (Object.keys(this.selectedVideo).length > 0) {
+        return this.selectedVideo
       } else {
         let self = this
-        const selected = this.vod_sessions.find((item) => {
+        const selected = this.vodSessions.find((item) => {
           if (item.id == self.id) {
             return true
           } else {
@@ -62,7 +62,7 @@ export default {
       } else if (this.$route.query.video_url) {
         return this.$route.query.video_url
       } else if (this.$route.query.id != null) {
-        this.id = this.$route.query.id
+        // this.id = this.$route.query.id
         return this.selected_video_computed.video_url
       } else {
         return ''

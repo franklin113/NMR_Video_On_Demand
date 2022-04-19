@@ -7,11 +7,11 @@
           <h1 class="vod-header-text">{{ cat.title }}</h1>
         </div>
         <vod-section
-          :vod_data="sorted_vod[cat.id]"
-          :vod_config="vod_config"
-          :active_description_id="active_description_id"
+          :vod-data="sorted_vod[cat.id]"
+          :vod-config="vodConfig"
+          :active-description-id="activeDescriptionId"
           @video-clicked="$emit('video-clicked', $event)"
-          @description_clicked="$emit('description_clicked', $event)"
+          @description-clicked="$emit('description_clicked', $event)"
         ></vod-section>
       </div>
     </section>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  props: ['sorted_vod', 'categories', 'vod_config', 'active_description_id'],
+  props: ['sortedVod', 'categories', 'vodConfig', 'activeDescriptionId'],
 }
 </script>
 

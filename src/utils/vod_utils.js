@@ -1,3 +1,5 @@
+import { groupBy } from 'lodash'
+const vod_user_data = { user_type: '' }
 const vod_utils = {
   first_play: true,
   analytics_location: window.location.pathname.split('/').slice(-1)[0],
@@ -111,10 +113,10 @@ const vod_utils = {
     })
   },
 
-  vod_logger(data) {
+  vod_logger(data, db) {
     console.log('hi,', this.analytics_location)
     let fb_key = this.analytics_location.replace(/[\.$\s]/g, '_')
-    const vod_ref = vod_db.ref('video_analytics/' + fb_key)
+    const vod_ref = db.ref('video_analytics/' + fb_key)
     const new_item = vod_ref.push()
     new_item
       .set(data)
@@ -134,7 +136,7 @@ const vod_utils = {
 
   group_by(array_of_items_with_category_as_key, key) {
     console.log('hello')
-    let group_items = _.groupBy(array_of_items_with_category_as_key, (x) => x[key])
+    let group_items = groupBy(array_of_items_with_category_as_key, (x) => x[key])
     console.log(group_items)
     return group_items
   },
@@ -162,3 +164,4 @@ const vod_utils = {
     return content.length > length ? content.slice(0, length) + clamp : content
   },
 }
+export default vod_utils
