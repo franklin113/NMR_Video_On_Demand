@@ -29,14 +29,17 @@
             style="width: 100%; height: auto"
           />
         </div>
-        <h2 class="session-title">{{ session.title }}</h2>
+        <div class="video-title-section">
+          <h2 class="session-title">{{ session.title }}</h2>
+          <LikeSection
+            :current-user-likes="currentUserLikes"
+            :video-like-counters="videoLikeCounters"
+            :uid="session.id.toString()"
+            @click="$emit('like-btn-clicked', $event)"
+          ></LikeSection>
+        </div>
       </a>
-      <LikeSection
-        :current-user-likes="currentUserLikes"
-        :video-like-counters="videoLikeCounters"
-        :uid="session.id.toString()"
-        @click="$emit('like-btn-clicked', $event)"
-      ></LikeSection>
+
       <div class="video-description-wrapper">
         <p class="session-description">
           <transition>
@@ -122,17 +125,21 @@ export default {
 }
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-<style lang="scss" scoped>
-
+<style scoped>
+.vod-category {
+  display: flex;
+  justify-content: space-evenly;
+}
+.like-section {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.video-title-section {
+  position: relative;
+}
+.session-title {
+  margin-right: 30px;
+  margin-left: 30px;
+}
 </style>

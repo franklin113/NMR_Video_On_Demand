@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="like-section" @click.stop="clicked">
     <div class="like-count">{{ likeCount }}</div>
-    <div class="star-wrapper" @click="clicked">
+    <div class="star-wrapper">
       <i v-if="active" class="fas fa-star"></i>
       <i v-else class="far fa-star"></i>
     </div>
@@ -45,6 +45,13 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style  scoped>
+.star-wrapper {
+  margin-left: 5px;
+}
+.like-section {
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+}
 </style>
