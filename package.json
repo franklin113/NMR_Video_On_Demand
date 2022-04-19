@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "push": "gsutil -m cp -r src/NMR_Video_On_Demand.js gs://cgcaci21.appspot.com/video_on_demand/video_on_demand.js",
     "emulators": "firebase emulators:start --export-on-exit=\"./data\" --import=\"./data\""
-
   },
   "repository": {
     "type": "git",
@@ -18,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/franklin113/NMR_Video_On_Demand/issues"
   },
-  "homepage": "https://github.com/franklin113/NMR_Video_On_Demand#readme"
+  "homepage": "https://github.com/franklin113/NMR_Video_On_Demand#readme",
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "2.4.1"
+  }
 }
