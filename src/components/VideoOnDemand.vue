@@ -107,6 +107,18 @@ export default {
     }
   },
   computed: {
+    topVideos: function () {
+      const counters = Object.entries(this.videoLikeCounters)
+        .filter((item) => item[1] > 0)
+        .sort((a, b) => b[1] - a[1])
+      const numItems = this.vodConfig.leaderboardCount || 0
+      const topX = counters.slice(0, numItems)
+      const topItems = topX.map((item) => {
+        console.log(item)
+        return this.vodSessions.find((v) => v.id == item[0])
+      })
+      return topItems
+    },
     sortedVod: function () {
       let copy_of_original_videos = this.vodSessions // add a slice if we are sorting the original, we aren't yet
 
@@ -130,6 +142,9 @@ export default {
       })
 
       const grouped_vod = vod_utils.group_by(copy_of_original_videos, 'category')
+      if (this.vodConfig.leaderboardEnabled) {
+        grouped_vod.leaderboard = this.topVideos
+      }
       return grouped_vod
     },
     categories: function () {
@@ -138,6 +153,12 @@ export default {
         this.vodConfig && this.vodConfig.categories
           ? Object.values(this.vodConfig.categories).filter((cat) => cat.id in self.sortedVod)
           : []
+      if (this.vodConfig.leaderboardEnabled) {
+        filtered_cats.unshift({
+          id: 'leaderboard',
+          title: this.vodConfig.leaderboardTitle || 'Top Videos',
+        })
+      }
       return filtered_cats
     },
     currentRouteName() {
@@ -176,11 +197,14 @@ export default {
     // * video on demand videos
     vod_ref.on('child_added', (data) => {
       let new_item = data.val()
+
+      new_item.id = new_item.id ? new_item.id.toString() : ''
       self.handle_child_added(self.vodSessions, new_item)
     })
 
     vod_ref.on('child_changed', (data) => {
       let new_item = data.val()
+      new_item.id = new_item.id ? new_item.id.toString() : ''
       self.handle_child_changed(self.vodSessions, new_item)
     })
 
