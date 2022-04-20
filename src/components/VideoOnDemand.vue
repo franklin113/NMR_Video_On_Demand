@@ -1,7 +1,22 @@
 <template>
   <main id="app">
     <transition tag="div" name="fade" mode="out-in">
-      <VodList
+      <component
+        :is="activeComponentName"
+        :sorted-vod="sortedVod"
+        :vod-config="vodConfig"
+        :categories="categories"
+        :selected-video="selectedVideo"
+        :vod-sessions="vodSessions"
+        :active-description-id="activeDescriptionId"
+        :current-user-likes="currentUserLikes"
+        :video-like-counters="videoLikeCounters"
+        :class="vodConfig.playerClasses || ''"
+        @description-clicked="description_clicked"
+        @video-clicked="video_clicked"
+        @like-btn-clicked="likeButtonClicked"
+      ></component>
+      <!-- <VodList
         v-if="vodMode === LIST_VIEW_ROUTE_NAME"
         :key="LIST_VIEW_ROUTE_NAME"
         :ref="LIST_VIEW_ROUTE_NAME"
@@ -32,7 +47,7 @@
         @description-clicked="description_clicked"
         @video-clicked="video_clicked"
         @like-btn-clicked="likeButtonClicked"
-      ></VodPlayer>
+      ></VodPlayer> -->
       <!-- <router-view
         :ref="$route.name"
         :sortedVod="sortedVod"
@@ -76,6 +91,7 @@ import VodPlayer from '@/components/VodPlayer'
 import { LIST_VIEW_ROUTE_NAME, VIDEO_PLAYER_ROUTE_NAME } from '@/router/constants'
 import { omit } from 'lodash'
 export default {
+  name: 'VideoOnDemand',
   components: {
     VodList,
     VodPlayer,
@@ -111,10 +127,10 @@ export default {
   computed: {
     topVideos: function () {
       const counters = Object.entries(this.videoLikeCounters)
-        .filter((item) => item[1] > 0)
+        .filter((item) => item[1] > 0 && this.vodSessions.find((v) => v.id == item[0]))
         .sort((a, b) => b[1] - a[1])
       const numItems = this.vodConfig.leaderboardCount || 0
-      const topX = counters.slice(0, numItems)
+      const topX = counters.length > numItems ? counters.slice(0, numItems) : counters
       const topItems = topX.map((item) => {
         console.log(item)
         return this.vodSessions.find((v) => v.id == item[0])
@@ -176,6 +192,15 @@ export default {
         return VIDEO_PLAYER_ROUTE_NAME
       } else {
         return null
+      }
+    },
+    activeComponentName: function () {
+      if (this.vodMode === LIST_VIEW_ROUTE_NAME) {
+        return 'VodList'
+      } else if (this.vodMode === VIDEO_PLAYER_ROUTE_NAME) {
+        return 'VodPlayer'
+      } else {
+        return ''
       }
     },
   },
@@ -329,9 +354,9 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-.fade-leave-active {
+/* .fade-leave-active {
   position: absolute;
-}
+} */
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
