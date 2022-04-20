@@ -16,49 +16,6 @@
         @video-clicked="video_clicked"
         @like-btn-clicked="likeButtonClicked"
       ></component>
-      <!-- <VodList
-        v-if="vodMode === LIST_VIEW_ROUTE_NAME"
-        :key="LIST_VIEW_ROUTE_NAME"
-        :ref="LIST_VIEW_ROUTE_NAME"
-        :sorted-vod="sortedVod"
-        :vod-config="vodConfig"
-        :categories="categories"
-        :selected-video="selectedVideo"
-        :vod-sessions="vodSessions"
-        :active-description-id="activeDescriptionId"
-        :current-user-likes="currentUserLikes"
-        :video-like-counters="videoLikeCounters"
-        @description-clicked="description_clicked"
-        @video-clicked="video_clicked"
-        @like-btn-clicked="likeButtonClicked"
-      ></VodList>
-      <VodPlayer
-        v-else-if="vodMode === VIDEO_PLAYER_ROUTE_NAME && vodConfig"
-        :key="VIDEO_PLAYER_ROUTE_NAME"
-        :ref="VIDEO_PLAYER_ROUTE_NAME"
-        :sorted-vod="sortedVod"
-        :vod-config="vodConfig"
-        :selected-video="selectedVideo"
-        :vod-sessions="vodSessions"
-        :active-description-id="activeDescriptionId"
-        :current-user-likes="currentUserLikes"
-        :video-like-counters="videoLikeCounters"
-        :class="vodConfig.playerClasses || ''"
-        @description-clicked="description_clicked"
-        @video-clicked="video_clicked"
-        @like-btn-clicked="likeButtonClicked"
-      ></VodPlayer> -->
-      <!-- <router-view
-        :ref="$route.name"
-        :sortedVod="sortedVod"
-        :vodConfig="vodConfig"
-        :categories="categories"
-        :selectedVideo="selectedVideo"
-        :vodSessions="vodSessions"
-        :activeDescriptionId="activeDescriptionId"
-        @description_clicked="description_clicked"
-        @video-clicked="video_clicked"
-      ></router-view> -->
     </transition>
     <div id="vod-footer">
       <p class="vod-footer-text">
