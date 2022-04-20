@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <router-view
-      :user-data="userData"
-      :database="database"
-      :vod-library-id="'253298'"
-      :auth="auth"
-    />
+    <router-view :user-data="userData" :database="database" :vod-library-id="'asdf'" :auth="auth" />
   </div>
 </template>
 
