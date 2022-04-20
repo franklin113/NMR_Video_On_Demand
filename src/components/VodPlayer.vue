@@ -32,6 +32,7 @@
 <script>
 import vod_utils from '@/utils/vod_utils'
 import LikeSection from '@/components/LikeSection'
+import { LIST_VIEW_ROUTE_NAME } from '@/router/constants'
 
 export default {
   components: {
@@ -141,7 +142,7 @@ export default {
       })
     },
     back_button_clicked() {
-      this.$router.back()
+      this.$router.push({ name: LIST_VIEW_ROUTE_NAME })
     },
   },
 }

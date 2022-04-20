@@ -1,6 +1,6 @@
 <template>
   <main id="app">
-    <transition-group name="fade" mode="out-in">
+    <transition tag="div" name="fade" mode="out-in">
       <VodList
         v-if="vodMode === LIST_VIEW_ROUTE_NAME"
         :key="LIST_VIEW_ROUTE_NAME"
@@ -24,6 +24,7 @@
         :sorted-vod="sortedVod"
         :vod-config="vodConfig"
         :selected-video="selectedVideo"
+        :vod-sessions="vodSessions"
         :active-description-id="activeDescriptionId"
         :current-user-likes="currentUserLikes"
         :video-like-counters="videoLikeCounters"
@@ -43,7 +44,7 @@
         @description_clicked="description_clicked"
         @video-clicked="video_clicked"
       ></router-view> -->
-    </transition-group>
+    </transition>
     <div id="vod-footer">
       <p class="vod-footer-text">
         {{ vodConfig.footer_text || '' }}
@@ -323,6 +324,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style  scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-leave-active {
+  position: absolute;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>
