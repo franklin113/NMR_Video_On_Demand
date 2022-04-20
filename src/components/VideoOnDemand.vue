@@ -18,7 +18,7 @@
         @like-btn-clicked="likeButtonClicked"
       ></VodList>
       <VodPlayer
-        v-else-if="vodMode === VIDEO_PLAYER_ROUTE_NAME"
+        v-else-if="vodMode === VIDEO_PLAYER_ROUTE_NAME && vodConfig"
         :key="VIDEO_PLAYER_ROUTE_NAME"
         :ref="VIDEO_PLAYER_ROUTE_NAME"
         :sorted-vod="sortedVod"
@@ -27,6 +27,7 @@
         :active-description-id="activeDescriptionId"
         :current-user-likes="currentUserLikes"
         :video-like-counters="videoLikeCounters"
+        :class="vodConfig.playerClasses || ''"
         @description-clicked="description_clicked"
         @video-clicked="video_clicked"
         @like-btn-clicked="likeButtonClicked"

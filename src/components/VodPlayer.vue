@@ -7,13 +7,15 @@
     <h1 v-if="selected_video_computed.title || title">
       {{ title || selected_video_computed.title }}
     </h1>
-    <b-embed
-      ref="videoplayer"
-      type="iframe"
-      aspect="16by9"
-      :src="selected_video_url"
-      allowfullscreen
-    ></b-embed>
+    <div class="embed-container">
+      <b-embed
+        ref="videoplayer"
+        type="iframe"
+        aspect="16by9"
+        :src="selected_video_url"
+        allowfullscreen
+      ></b-embed>
+    </div>
 
     <div id="vod-description">
       <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>

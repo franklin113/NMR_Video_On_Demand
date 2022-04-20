@@ -19,7 +19,7 @@ export default {
     return {
       database,
       auth,
-      eventId: 'In2lBGCKe8zPlYH3pCUq',
+      eventId: 'asdf',
       userData: {
         firstName: 'Tim',
         lastName: 'Franklin',
