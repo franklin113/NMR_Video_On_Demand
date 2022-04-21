@@ -66,9 +66,18 @@ export default {
     this.commentListener.off()
   },
   methods: {
-    onCommentSubmit(data) {
-      const newComment = new Comment(data)
-      const commentData = newComment.getData()
+    async onCommentSubmit(data) {
+      const commentData = {
+        firstName: this.userData.firstName,
+        lastName: this.userData.lastName,
+        email: this.userData.email,
+        attendeeId: this.userData.attendeeId,
+        text: data.text,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        libraryId: this.vodLibraryId,
+      }
+      const newComment = new Comment(commentData)
+      const validatedData = newComment.getData()
     },
   },
 }
