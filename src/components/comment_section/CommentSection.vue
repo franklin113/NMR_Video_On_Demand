@@ -1,15 +1,18 @@
 <template>
   <div id="comment-section">
-    <CommentForm @submit="onCommentSubmit"></CommentForm>
+    <CommentForm ref="form" :saving-comment="savingComment" @submit="onCommentSubmit"></CommentForm>
+    <CommentList ref="list" :comments="comments"></CommentList>
   </div>
 </template>
 
 <script>
 import CommentForm from '@/components/comment_section/CommentForm'
 import Comment from '@/classes/Comment'
+import CommentList from '@/components/comment_section/CommentList'
 export default {
   components: {
     CommentForm,
+    CommentList,
   },
   props: {
     videoId: {
@@ -37,36 +40,39 @@ export default {
     return {
       commentListener: null,
       comments: [],
+      commentsRef: null,
+      savingComment: false,
     }
   },
   mounted() {
     let self = this
-    this.commentListener = this.firestore
+    this.commentsRef = this.firestore
       .collection('video_on_demand')
       .doc(this.vodLibraryId)
       .collection('comments')
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.docChanges().forEach((change) => {
-          const newData = { id: change.doc.id, ...change.doc.data() }
-          if (change.type === 'added') {
-            self.comments.push(newData)
-          }
-          if (change.type === 'modified') {
-            const index = self.comments.findIndex((item) => item.id == change.doc.id)
-            self.comments.splice(index, 1, newData)
-          }
-          if (change.type === 'removed') {
-            const index = self.comments.findIndex((item) => item.id == change.doc.id)
-            self.comments.splice(index, 1)
-          }
-        })
+    this.commentListener = this.commentsRef.onSnapshot((querySnapshot) => {
+      querySnapshot.docChanges().forEach((change) => {
+        const newData = { id: change.doc.id, ...change.doc.data() }
+        if (change.type === 'added') {
+          self.comments.push(newData)
+        }
+        if (change.type === 'modified') {
+          const index = self.comments.findIndex((item) => item.id == change.doc.id)
+          self.comments.splice(index, 1, newData)
+        }
+        if (change.type === 'removed') {
+          const index = self.comments.findIndex((item) => item.id == change.doc.id)
+          self.comments.splice(index, 1)
+        }
       })
+    })
   },
   destroyed() {
     this.commentListener.off()
   },
   methods: {
     async onCommentSubmit(data) {
+      this.savingComment = true
       const commentData = {
         firstName: this.userData.firstName,
         lastName: this.userData.lastName,
@@ -75,9 +81,13 @@ export default {
         text: data.text,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         libraryId: this.vodLibraryId,
+        videoId: this.videoId,
       }
       const newComment = new Comment(commentData)
       const validatedData = newComment.getData()
+      await this.commentsRef.add(validatedData)
+      this.savingComment = false
+      this.$refs.form.saved()
     },
   },
 }

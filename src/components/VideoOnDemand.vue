@@ -182,7 +182,7 @@ export default {
     const parent_vod_ref = this.database.ref('vod_libraries')
     const vod_ref = parent_vod_ref.child('videos').child(final_id)
     const vodConfig_ref = parent_vod_ref.child('configs').child(final_id)
-    this.likedVideosRef = parent_vod_ref.child('user-video-likes').child(this.userData.id)
+    this.likedVideosRef = parent_vod_ref.child('user-video-likes').child(this.userData.attendeeId)
     this.videoLikeCountersRef = parent_vod_ref.child('video-like-counters').child(final_id)
     let self = this
 

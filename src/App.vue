@@ -27,7 +27,7 @@ export default {
         lastName: 'Franklin',
         email: 'tim@tim.com',
         canVote: true,
-        id: 'fake-user',
+        attendeeId: 'fake-user',
         userType: 'admin',
       },
     }

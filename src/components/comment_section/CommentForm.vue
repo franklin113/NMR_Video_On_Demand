@@ -12,7 +12,7 @@
       <b-button
         id="comm-form-submit"
         type="submit"
-        :disabled="form.text.length == 0"
+        :disabled="form.text.length == 0 || savingComment"
         variant="primary"
         >Comment</b-button
       >
@@ -24,6 +24,12 @@
 import debounce from '@/utils/debounce'
 
 export default {
+  props: {
+    savingComment: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       show: true,
@@ -40,6 +46,10 @@ export default {
     }, 250),
     onReset() {
       this.dirty = false
+    },
+    saved() {
+      this.dirty = false
+      this.form.text = ''
     },
   },
 }
