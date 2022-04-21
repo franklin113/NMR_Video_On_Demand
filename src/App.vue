@@ -1,11 +1,17 @@
 <template>
   <div id="app">
-    <router-view :user-data="userData" :database="database" :vod-library-id="'asdf'" :auth="auth" />
+    <router-view
+      :user-data="userData"
+      :database="database"
+      :firestore="firestore"
+      :vod-library-id="'asdf'"
+      :auth="auth"
+    />
   </div>
 </template>
 
 <script>
-import { database, auth } from '@/firebase/firebase_config'
+import { database, auth, firestore } from '@/firebase/firebase_config'
 
 export default {
   name: 'App',
@@ -13,6 +19,7 @@ export default {
   data() {
     return {
       database,
+      firestore,
       auth,
       eventId: 'asdf',
       userData: {

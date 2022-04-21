@@ -26,6 +26,13 @@
       :uid="id"
       @click="$emit('like-btn-clicked', $event)"
     ></LikeSection>
+    <CommentSection
+      :firestore="firestore"
+      :database="database"
+      :video-id="id"
+      :vod-library-id="vodLibraryId"
+      :user-data="userData"
+    ></CommentSection>
   </div>
 </template>
 
@@ -33,10 +40,11 @@
 import vod_utils from '@/utils/vod_utils'
 import LikeSection from '@/components/LikeSection'
 import { LIST_VIEW_ROUTE_NAME } from '@/router/constants'
-
+import CommentSection from '@/components/comment_section/CommentSection'
 export default {
   components: {
     LikeSection,
+    CommentSection,
   },
   props: {
     selectedVideo: {
@@ -54,6 +62,22 @@ export default {
     videoLikeCounters: {
       type: Object,
       default: () => {},
+    },
+    database: {
+      type: Object,
+      required: true,
+    },
+    firestore: {
+      type: Object,
+      required: true,
+    },
+    vodLibraryId: {
+      type: String,
+      required: true,
+    },
+    userData: {
+      type: Object,
+      required: true,
     },
   },
   data() {

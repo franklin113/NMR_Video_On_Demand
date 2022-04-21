@@ -3,6 +3,8 @@
     <transition tag="div" name="fade" mode="out-in">
       <component
         :is="activeComponentName"
+        :firestore="firestore"
+        :database="database"
         :sorted-vod="sortedVod"
         :vod-config="vodConfig"
         :categories="categories"
@@ -12,6 +14,8 @@
         :current-user-likes="currentUserLikes"
         :video-like-counters="videoLikeCounters"
         :class="vodConfig.playerClasses || ''"
+        :vod-library-id="vodLibraryId"
+        :user-data="userData"
         @description-clicked="description_clicked"
         @video-clicked="video_clicked"
         @like-btn-clicked="likeButtonClicked"
@@ -56,7 +60,11 @@ export default {
   props: {
     database: {
       type: Object,
-      default: () => {},
+      required: true,
+    },
+    firestore: {
+      type: Object,
+      required: true,
     },
     vodLibraryId: {
       type: String,
