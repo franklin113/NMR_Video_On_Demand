@@ -2,7 +2,7 @@
   <b-form v-if="show" @submit.prevent="onSubmit" @reset="onReset">
     <b-form-input
       id="inline-form-input-name"
-      v-model="messageText"
+      v-model="form.text"
       class="mb-2 mr-sm-2 mb-sm-0"
       placeholder="Add a comment..."
       @click="dirty = true"
@@ -12,7 +12,7 @@
       <b-button
         id="comm-form-submit"
         type="submit"
-        :disabled="messageText.length == 0"
+        :disabled="form.text.length == 0"
         variant="primary"
         >Comment</b-button
       >
@@ -28,12 +28,14 @@ export default {
     return {
       show: true,
       dirty: false,
-      messageText: '',
+      form: {
+        text: '',
+      },
     }
   },
   methods: {
     onSubmit: debounce(function () {
-      this.$emit('submit', { text: this.messageText })
+      this.$emit('submit', this.form)
       this.dirty = false
     }, 250),
     onReset() {
