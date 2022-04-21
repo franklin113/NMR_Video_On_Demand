@@ -28,4 +28,8 @@ div#comments-list {
   display: flex;
   flex-direction: column;
 }
+.single-comment {
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
 </style>

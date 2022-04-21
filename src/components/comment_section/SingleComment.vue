@@ -1,9 +1,9 @@
 <template>
   <div class="single-comment">
-    <div class="left-section">
+    <div class="single-comment-part left-section">
       <div class="user-initials">TF</div>
     </div>
-    <div class="mid-section">
+    <div class="single-comment-part mid-section">
       <div class="comment-header">
         <div class="comment-author">
           {{ comment.firstName + ' ' + comment.lastName }}
@@ -12,7 +12,7 @@
           {{ convertTimestamp(comment.timestamp) }}
         </div>
       </div>
-      <div class="comment-body">
+      <div class="single-comment-part comment-body">
         {{ comment.text }}
       </div>
     </div>
@@ -44,5 +44,24 @@ export default {
 
 .comment-header {
   display: flex;
+}
+.single-comment-part.mid-section {
+    flex: 1;
+}
+.single-comment-part.comment-body {
+    text-align: left;
+}
+.single-comment-part.left-section {
+    border-radius: 25px;
+    background-color: red;
+    width: 50px;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.single-comment-part.left-section {
+    margin-right: 1em;
 }
 </style>
