@@ -1,7 +1,25 @@
 <template>
   <div id="comments-list">
+    <b-dropdown
+      v-model="sortDropdownVal"
+      size="lg"
+      variant="link"
+      toggle-class="text-decoration-none"
+      no-caret
+    >
+      <template #button-content>
+        <span class="filter-dropdown-button"><i class="far fa-sort-amount-down"></i></span>
+      </template>
+      <b-dropdown-item
+        v-for="(item, index) in sortOptions"
+        :key="index"
+        :active="item.value === sortDropdownVal"
+        @click="sortDropdownVal = item.value"
+        >{{ item.text }}</b-dropdown-item
+      >
+    </b-dropdown>
     <SingleComment
-      v-for="(comment, index) in comments"
+      v-for="(comment, index) in sortedComments"
       :key="index"
       :comment="comment"
     ></SingleComment>
@@ -20,6 +38,45 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      sortOptions: [
+        {
+          text: 'Top Comments',
+          value: 'ranked-asc',
+        },
+        {
+          text: 'Newest First',
+          value: 'timestamp-asc',
+        },
+      ],
+      sortDropdownVal: null,
+    }
+  },
+  computed: {
+    sortedComments: function () {
+      const copyOFComments = [...this.comments]
+      if (this.sortDropdownVal === 'timestamp-asc') {
+        return copyOFComments.sort((a, b) => {
+          return a.timestamp > b.timestamp
+        })
+      } else if (this.sortDropdownVal === 'timestamp-desc') {
+        return copyOFComments.sort((a, b) => {
+          return a.timestamp < b.timestamp
+        })
+      } else if (this.sortDropdownVal === 'ranked-asc') {
+        return copyOFComments.sort((a, b) => {
+          return a.likes > b.likes
+        })
+      } else if (this.sortDropdownVal === 'ranked-desc') {
+        return copyOFComments.sort((a, b) => {
+          return a.likes < b.likes
+        })
+      } else {
+        return copyOFComments
+      }
+    },
+  },
 }
 </script>
 
@@ -29,7 +86,12 @@ div#comments-list {
   flex-direction: column;
 }
 .single-comment {
-    margin-top: 1em;
-    margin-bottom: .5em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+</style>
+<style>
+div#comments-list .btn-group > .btn {
+  flex: 0 !important;
 }
 </style>

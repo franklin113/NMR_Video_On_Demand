@@ -1,12 +1,13 @@
 <template>
   <b-form v-if="show" @submit.prevent="onSubmit" @reset="onReset">
-    <b-form-input
+    <b-form-textarea
       id="inline-form-input-name"
       v-model="form.text"
       class="mb-2 mr-sm-2 mb-sm-0"
       placeholder="Add a comment..."
+      no-resize
       @click="dirty = true"
-    ></b-form-input>
+    ></b-form-textarea>
     <div id="comment-form-btns">
       <b-button v-if="dirty" id="comm-form-cancel" type="reset" variant="light">Cancel</b-button>
       <b-button

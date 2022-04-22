@@ -46,22 +46,22 @@ export default {
   display: flex;
 }
 .single-comment-part.mid-section {
-    flex: 1;
+  flex: 1;
 }
 .single-comment-part.comment-body {
-    text-align: left;
+  text-align: left;
 }
 .single-comment-part.left-section {
-    border-radius: 25px;
-    background-color: red;
-    width: 50px;
-    color: #fff;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border-radius: 25px;
+  background-color: red;
+  width: 50px;
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .single-comment-part.left-section {
-    margin-right: 1em;
+  margin-right: 1em;
 }
 </style>
