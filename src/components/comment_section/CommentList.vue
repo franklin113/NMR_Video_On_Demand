@@ -7,7 +7,13 @@
           {{ sortedComments && sortedComments.length == 1 ? 'Comment' : 'Comments' }}
         </span>
       </div>
-      <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
+      <b-dropdown
+        id="comment-dropdown"
+        size="lg"
+        variant="link"
+        toggle-class="text-decoration-none"
+        no-caret
+      >
         <template #button-content>
           <span class="filter-dropdown-button"><i class="far fa-sort-amount-down"></i></span>
         </template>
@@ -110,5 +116,11 @@ div#comments-list .btn-group > .btn {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+div#comment-count {
+  margin-right: 1em;
+}
+div#comment-dropdown button {
+  padding: 7px;
 }
 </style>

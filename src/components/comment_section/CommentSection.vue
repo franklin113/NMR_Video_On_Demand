@@ -63,22 +63,28 @@ export default {
       .collection('video_on_demand')
       .doc(this.vodLibraryId)
       .collection('comments')
-    this.commentListener = this.commentsRef.onSnapshot((querySnapshot) => {
-      querySnapshot.docChanges().forEach((change) => {
-        const newData = { id: change.doc.id, ...change.doc.data({ serverTimestamps: 'estimate' }) }
-        if (change.type === 'added') {
-          self.comments.push(newData)
-        }
-        if (change.type === 'modified') {
-          const index = self.comments.findIndex((item) => item.id == change.doc.id)
-          self.comments.splice(index, 1, newData)
-        }
-        if (change.type === 'removed') {
-          const index = self.comments.findIndex((item) => item.id == change.doc.id)
-          self.comments.splice(index, 1)
-        }
+
+    this.commentListener = this.commentsRef
+      .where('videoId', '==', this.videoId)
+      .onSnapshot((querySnapshot) => {
+        querySnapshot.docChanges().forEach((change) => {
+          const newData = {
+            id: change.doc.id,
+            ...change.doc.data({ serverTimestamps: 'estimate' }),
+          }
+          if (change.type === 'added') {
+            self.comments.push(newData)
+          }
+          if (change.type === 'modified') {
+            const index = self.comments.findIndex((item) => item.id == change.doc.id)
+            self.comments.splice(index, 1, newData)
+          }
+          if (change.type === 'removed') {
+            const index = self.comments.findIndex((item) => item.id == change.doc.id)
+            self.comments.splice(index, 1)
+          }
+        })
       })
-    })
   },
   destroyed() {
     this.commentListener()

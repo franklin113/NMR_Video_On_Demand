@@ -142,4 +142,13 @@ export default {
   margin-right: 30px;
   margin-left: 30px;
 }
+a.video-click-region:hover {
+  text-decoration: none;
+}
+.like-section {
+  color: #000;
+}
+h2.session-title {
+  color: #000;
+}
 </style>

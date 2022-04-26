@@ -100,4 +100,16 @@ export default {
 .comment-timestamp {
   margin-left: 10px;
 }
+.comment-like-count {
+  font-size: 1.2em;
+}
+i.fa-heart {
+  font-size: 1.5em;
+}
+.single-comment-right-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 </style>

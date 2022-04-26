@@ -4,7 +4,7 @@
       :user-data="userData"
       :database="database"
       :firestore="firestore"
-      :vod-library-id="'asdf'"
+      :vod-library-id="'398788'"
       :auth="auth"
     />
   </div>

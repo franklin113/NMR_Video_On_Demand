@@ -53,5 +53,8 @@ export default {
   font-size: 14px;
   cursor: pointer;
   display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 </style>

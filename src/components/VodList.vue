@@ -27,28 +27,35 @@ export default {
   components: {
     VodSection,
   },
-  props: [
-    'sortedVod',
-    'categories',
-    'vodConfig',
-    'activeDescriptionId',
-    'currentUserLikes',
-    'videoLikeCounters',
-  ],
+  props: {
+    sortedVod: {
+      type: Object,
+      default: () => {},
+    },
+    categories: {
+      type: Array,
+      default: () => [],
+    },
+    vodConfig: {
+      type: Object,
+      default: () => {},
+    },
+    activeDescriptionId: {
+      type: String,
+      default: '',
+    },
+    currentUserLikes: {
+      type: Object,
+      default: () => {},
+    },
+    videoLikeCounters: {
+      type: Object,
+      default: () => {},
+    },
+  },
 }
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

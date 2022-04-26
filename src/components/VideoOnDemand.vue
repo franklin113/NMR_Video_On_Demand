@@ -1,5 +1,5 @@
 <template>
-  <main id="app">
+  <div id="vod-component-main">
     <transition tag="div" name="fade" mode="out-in">
       <component
         :is="activeComponentName"
@@ -44,7 +44,7 @@
         allowfullscreen
       ></b-embed>
     </b-modal>
-  </main>
+  </div>
 </template>
 
 <script>

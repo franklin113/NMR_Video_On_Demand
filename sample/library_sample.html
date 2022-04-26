@@ -17,6 +17,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+
+    <!-- #region -- copy and paste into ef -->
+
+    <style>
+      .col-12.tab-content {
+          width: 100%;
+          max-width: 100%;
+      }
+    </style>
+
   <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 
     <script src="https://unpkg.com/vue-router@3.4.9/dist/vue-router.js"></script>
@@ -24,19 +35,23 @@
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script src="https://cdn.jsdelivr.net/lodash/4.11.1/lodash.min.js"></script>
 
-    <link rel="stylesheet" href="../dist/VideoOnDemand_v1.0.css">
-    <script src="../dist/VideoOnDemand_v1.0.umd.min.js" ></script>
+    <!-- <link rel="stylesheet" href="../dist/VideoOnDemand_v1.0.css"> -->
+    <link rel="stylesheet" href="https://firebasestorage.googleapis.com/v0/b/cgcaci21.appspot.com/o/video-on-demand%2FVideoOnDemand_v1.0.css?alt=media&token=d04fb8b9-418a-4341-8c5f-bd3bf1069c39">
+    <!-- <script src="../dist/VideoOnDemand_v1.0.umd.min.js" ></script> -->
+    <script src="https://firebasestorage.googleapis.com/v0/b/cgcaci21.appspot.com/o/video-on-demand%2FVideoOnDemand_v1.0.umd.min.js?alt=media&token=63650720-74bd-4a7a-8333-60ed7efa3445" ></script>
+
+
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
 
     <div id="vod-app">
-      <router-view :user-data="userData"
+      <div is="router-view" :user-data="userData"
         :database="database"
         :firestore="firestore"
-        :vod-library-id="'asdf'"
+        :vod-library-id="videoLibraryId"
         :auth="auth"
-      ></router-view>
+      ></div>
     </div>
 
     <script>
@@ -44,7 +59,7 @@
       var firebaseConfig = {
         apiKey: 'AIzaSyB_UfOy9uRdArhuIq4DaqFhWeX-pgSJHP8',
         authDomain: 'cgcaci21.firebaseapp.com',
-        databaseURL: 'https://cgcaci21.firebaseio.com',
+        databaseURL: 'https://timtest-932kd.firebaseio.com/',
         projectId: 'cgcaci21',
         storageBucket: 'cgcaci21.appspot.com',
         messagingSenderId: '595065889262',
@@ -54,8 +69,8 @@
       const app = firebase.initializeApp(firebaseConfig)
       const database = firebase.database()
       const firestore = firebase.firestore()
-      database.useEmulator('localhost', 9007)
-      firestore.useEmulator('localhost', 8089)
+      // database.useEmulator('localhost', 9007)
+      // firestore.useEmulator('localhost', 8089)
 
       const LIST_VIEW_ROUTE_NAME = 'list'
       const VIDEO_PLAYER_ROUTE_NAME = 'videoplayer'
@@ -75,10 +90,12 @@
         // mode: 'history',
         routes,
       })
+      const videoLibraryId = window.location.pathname.split('/').slice(-1)[0]
       const vodVue = new Vue({
         el: "#vod-app",
         router,
         data: {
+          videoLibraryId,
           database,
           firestore,
           auth : null,
@@ -94,5 +111,8 @@
         }
       })
     </script>
+
+    <!-- #endregion -- copy and paste into ef -->
+
   </body>
 </html>

@@ -9,7 +9,8 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --fix",
     "emulators": "firebase emulators:start --export-on-exit=\"./data\" --import=\"./data\"",
-    "push": "gsutil -m cp -r src/NMR_Video_On_Demand.js gs://cgcaci21.appspot.com/video_on_demand/video_on_demand.js"
+    "push": "gsutil -m cp -r dist/VideoOnDemand_v1.0.umd.min.js gs://cgcaci21.appspot.com/video-on-demand/VideoOnDemand_v1.0.umd.min.js & gsutil -m cp -r  dist/VideoOnDemand_v1.0.css gs://cgcaci21.appspot.com/video-on-demand/VideoOnDemand_v1.0.css",
+    "build-push": "npm run test:unit && npm run build && npm run push"
   },
   "dependencies": {
     "bootstrap": "^5.1.3",
