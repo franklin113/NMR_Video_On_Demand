@@ -1,23 +1,31 @@
 <template>
   <div id="comments-list">
-    <b-dropdown
-      v-model="sortDropdownVal"
-      size="lg"
-      variant="link"
-      toggle-class="text-decoration-none"
-      no-caret
-    >
-      <template #button-content>
-        <span class="filter-dropdown-button"><i class="far fa-sort-amount-down"></i></span>
-      </template>
-      <b-dropdown-item
-        v-for="(item, index) in sortOptions"
-        :key="index"
-        :active="item.value === sortDropdownVal"
-        @click="sortDropdownVal = item.value"
-        >{{ item.text }}</b-dropdown-item
+    <div class="comment-info-section">
+      <div id="comment-count">
+        <span class="comment-count-number">{{ sortedComments ? sortedComments.length : 0 }}</span>
+        <span class="comment-count-text">
+          {{ sortedComments && sortedComments.length == 1 ? 'Comment' : 'Comments' }}
+        </span>
+      </div>
+      <b-dropdown
+        v-model="sortDropdownVal"
+        size="lg"
+        variant="link"
+        toggle-class="text-decoration-none"
+        no-caret
       >
-    </b-dropdown>
+        <template #button-content>
+          <span class="filter-dropdown-button"><i class="far fa-sort-amount-down"></i></span>
+        </template>
+        <b-dropdown-item
+          v-for="(item, index) in sortOptions"
+          :key="index"
+          :active="item.value === sortDropdownVal"
+          @click="sortDropdownVal = item.value"
+          >{{ item.text }}</b-dropdown-item
+        >
+      </b-dropdown>
+    </div>
     <SingleComment
       v-for="(comment, index) in sortedComments"
       :key="index"
@@ -93,5 +101,10 @@ div#comments-list {
 <style>
 div#comments-list .btn-group > .btn {
   flex: 0 !important;
+}
+.comment-info-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 </style>
