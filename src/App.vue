@@ -12,7 +12,6 @@
 
 <script>
 import { database, auth, firestore } from '@/firebase/firebase_config'
-
 export default {
   name: 'App',
   components: {},

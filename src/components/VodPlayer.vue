@@ -32,6 +32,8 @@
       :video-id="id"
       :vod-library-id="vodLibraryId"
       :user-data="userData"
+      :current-user-comment-likes="currentUserCommentLikes"
+      :liked-comments-ref="likedCommentsRef"
     ></CommentSection>
   </div>
 </template>
@@ -59,7 +61,15 @@ export default {
       type: Object,
       default: () => {},
     },
+    currentUserCommentLikes: {
+      type: Object,
+      default: () => {},
+    },
     videoLikeCounters: {
+      type: Object,
+      default: () => {},
+    },
+    likedCommentsRef: {
       type: Object,
       default: () => {},
     },

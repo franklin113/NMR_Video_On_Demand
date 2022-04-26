@@ -1,7 +1,12 @@
 <template>
   <div id="comment-section">
     <CommentForm ref="form" :saving-comment="savingComment" @submit="onCommentSubmit"></CommentForm>
-    <CommentList ref="list" :comments="comments"></CommentList>
+    <CommentList
+      ref="list"
+      :comments="comments"
+      :current-user-comment-likes="currentUserCommentLikes"
+      @like="commentLikeButtonClicked"
+    ></CommentList>
   </div>
 </template>
 
@@ -35,6 +40,14 @@ export default {
       type: Object,
       required: true,
     },
+    currentUserCommentLikes: {
+      type: Object,
+      default: () => {},
+    },
+    likedCommentsRef: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -52,7 +65,7 @@ export default {
       .collection('comments')
     this.commentListener = this.commentsRef.onSnapshot((querySnapshot) => {
       querySnapshot.docChanges().forEach((change) => {
-        const newData = { id: change.doc.id, ...change.doc.data() }
+        const newData = { id: change.doc.id, ...change.doc.data({ serverTimestamps: 'estimate' }) }
         if (change.type === 'added') {
           self.comments.push(newData)
         }
@@ -68,7 +81,7 @@ export default {
     })
   },
   destroyed() {
-    this.commentListener.off()
+    this.commentListener()
   },
   methods: {
     async onCommentSubmit(data) {
@@ -88,6 +101,14 @@ export default {
       await this.commentsRef.add(validatedData)
       this.savingComment = false
       this.$refs.form.saved()
+    },
+    async commentLikeButtonClicked({ id, state }) {
+      let newVal = state || null
+      let newCountIncrement = state ? 1 : -1
+      await this.likedCommentsRef.child(id).set(newVal)
+      await this.commentsRef.doc(id).update({
+        likes: firebase.firestore.FieldValue.increment(newCountIncrement),
+      })
     },
   },
 }

@@ -12,7 +12,9 @@
         :vod-sessions="vodSessions"
         :active-description-id="activeDescriptionId"
         :current-user-likes="currentUserLikes"
+        :current-user-comment-likes="currentUserCommentLikes"
         :video-like-counters="videoLikeCounters"
+        :liked-comments-ref="likedCommentsRef"
         :class="vodConfig.playerClasses || ''"
         :vod-library-id="vodLibraryId"
         :user-data="userData"
@@ -51,6 +53,8 @@ import VodList from '@/components/VodList'
 import VodPlayer from '@/components/VodPlayer'
 import { LIST_VIEW_ROUTE_NAME, VIDEO_PLAYER_ROUTE_NAME } from '@/router/constants'
 import { omit } from 'lodash'
+import event_bus from '@/event_bus/event_bus'
+
 export default {
   name: 'VideoOnDemand',
   components: {
@@ -84,7 +88,9 @@ export default {
       LIST_VIEW_ROUTE_NAME,
       VIDEO_PLAYER_ROUTE_NAME,
       currentUserLikes: {},
+      currentUserCommentLikes: {},
       likedVideosRef: null,
+      likedCommentsRef: null,
       videoLikeCountersRef: null,
       videoLikeCounters: {},
     }
@@ -183,6 +189,9 @@ export default {
     const vod_ref = parent_vod_ref.child('videos').child(final_id)
     const vodConfig_ref = parent_vod_ref.child('configs').child(final_id)
     this.likedVideosRef = parent_vod_ref.child('user-video-likes').child(this.userData.attendeeId)
+    this.likedCommentsRef = parent_vod_ref
+      .child('user-comment-likes')
+      .child(this.userData.attendeeId)
     this.videoLikeCountersRef = parent_vod_ref.child('video-like-counters').child(final_id)
     let self = this
 
@@ -222,6 +231,25 @@ export default {
 
     this.likedVideosRef.on('child_removed', (data) => {
       self.currentUserLikes = omit(self.currentUserLikes, data.key)
+    })
+
+    // * user's own likes on comments
+    this.likedCommentsRef.on('child_added', (data) => {
+      let new_item = data.val()
+      self.currentUserCommentLikes = Object.assign({}, self.currentUserCommentLikes, {
+        [data.key]: new_item,
+      })
+    })
+
+    this.likedCommentsRef.on('child_changed', (data) => {
+      let new_item = data.val()
+      self.currentUserCommentLikes = Object.assign({}, self.currentUserCommentLikes, {
+        [data.key]: new_item,
+      })
+    })
+
+    this.likedCommentsRef.on('child_removed', (data) => {
+      self.currentUserCommentLikes = omit(self.currentUserCommentLikes, data.key)
     })
 
     // * video like counters

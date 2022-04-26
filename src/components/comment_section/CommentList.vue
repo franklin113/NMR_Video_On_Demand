@@ -7,13 +7,7 @@
           {{ sortedComments && sortedComments.length == 1 ? 'Comment' : 'Comments' }}
         </span>
       </div>
-      <b-dropdown
-        v-model="sortDropdownVal"
-        size="lg"
-        variant="link"
-        toggle-class="text-decoration-none"
-        no-caret
-      >
+      <b-dropdown size="lg" variant="link" toggle-class="text-decoration-none" no-caret>
         <template #button-content>
           <span class="filter-dropdown-button"><i class="far fa-sort-amount-down"></i></span>
         </template>
@@ -30,6 +24,8 @@
       v-for="(comment, index) in sortedComments"
       :key="index"
       :comment="comment"
+      :current-user-comment-likes="currentUserCommentLikes"
+      @like="$emit('like', $event)"
     ></SingleComment>
   </div>
 </template>
@@ -45,6 +41,10 @@ export default {
       type: Array,
       required: true,
     },
+    currentUserCommentLikes: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -57,8 +57,12 @@ export default {
           text: 'Newest First',
           value: 'timestamp-asc',
         },
+        {
+          text: 'Oldest First',
+          value: 'timestamp-desc',
+        },
       ],
-      sortDropdownVal: null,
+      sortDropdownVal: 'timestamp-asc',
     }
   },
   computed: {
@@ -66,19 +70,19 @@ export default {
       const copyOFComments = [...this.comments]
       if (this.sortDropdownVal === 'timestamp-asc') {
         return copyOFComments.sort((a, b) => {
-          return a.timestamp > b.timestamp
+          return a.timestamp > b.timestamp ? -1 : 1
         })
       } else if (this.sortDropdownVal === 'timestamp-desc') {
         return copyOFComments.sort((a, b) => {
-          return a.timestamp < b.timestamp
+          return a.timestamp < b.timestamp ? -1 : 1
         })
       } else if (this.sortDropdownVal === 'ranked-asc') {
         return copyOFComments.sort((a, b) => {
-          return a.likes > b.likes
+          return b.likes - a.likes
         })
       } else if (this.sortDropdownVal === 'ranked-desc') {
         return copyOFComments.sort((a, b) => {
-          return a.likes < b.likes
+          return a.likes - b.likes
         })
       } else {
         return copyOFComments
