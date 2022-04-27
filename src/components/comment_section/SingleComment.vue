@@ -1,7 +1,12 @@
 <template>
   <div class="single-comment">
     <div class="single-comment-part left-section">
-      <div class="user-initials">TF</div>
+      <div class="user-initials">
+        {{
+          (comment.firstName ? comment.firstName[0] : '') +
+          (comment.lastName ? comment.lastName[0] : '')
+        }}
+      </div>
     </div>
     <div class="single-comment-part mid-section">
       <div class="comment-header">
