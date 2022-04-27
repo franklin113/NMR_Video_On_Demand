@@ -84,11 +84,11 @@ export default {
         })
       } else if (this.sortDropdownVal === 'ranked-asc') {
         return copyOFComments.sort((a, b) => {
-          return b.likes - a.likes
+          return (b.likes || 0) - (a.likes || 0)
         })
       } else if (this.sortDropdownVal === 'ranked-desc') {
         return copyOFComments.sort((a, b) => {
-          return a.likes - b.likes
+          return (a.likes || 0) - (b.likes || 0)
         })
       } else {
         return copyOFComments
