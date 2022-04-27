@@ -101,11 +101,10 @@
           auth : null,
           eventId: 'asdf',
           userData: {
-            firstName: 'Tim',
-            lastName: 'Franklin',
-            email: 'tim@tim.com',
-            canVote: true,
-            attendeeId: 'fake-user',
+            firstName: window.currentEventAttendee.attendee_fields.first_name,
+            lastName: window.currentEventAttendee.attendee_fields.last_name,
+            email: window.currentEventAttendee.attendee.email,
+            attendeeId: window.currentEventAttendee.attendee_fields.event_attendee_id,
             userType: 'admin',
           },
         }

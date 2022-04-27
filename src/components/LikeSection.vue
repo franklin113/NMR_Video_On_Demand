@@ -56,5 +56,9 @@ export default {
   justify-content: flex-end;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  align-items: center;
+}
+.like-section * {
+  font-size: 20px;
 }
 </style>

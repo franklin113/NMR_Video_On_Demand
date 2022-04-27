@@ -130,13 +130,16 @@ export default {
   display: flex;
   justify-content: space-evenly;
 }
-.like-section {
+
+/* .like-section {
   position: absolute;
   right: 0;
   top: 0;
-}
+} */
 .video-title-section {
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 .session-title {
   margin-right: 30px;
@@ -150,5 +153,8 @@ a.video-click-region:hover {
 }
 h2.session-title {
   color: #000;
+}
+section.session-container {
+  margin: 1em;
 }
 </style>
