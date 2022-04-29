@@ -1,6 +1,11 @@
 <template>
   <div id="speakers-component">
-    <a v-for="(item, index) in speakersComputed" :key="index" class="single-speaker">
+    <a
+      v-for="(item, index) in speakersComputed"
+      :key="index"
+      :[getHasHref(item)]="formatDirectoryUrl(item)"
+      class="single-speaker"
+    >
       <div class="single-speaker-div">{{ item.username || '' }}</div>
     </a>
   </div>
@@ -13,14 +18,39 @@ export default {
       type: Object,
       default: () => {},
     },
+    directoryId: {
+      type: String,
+      default: '',
+    },
   },
+
   computed: {
     speakersComputed: function () {
-      const copied = [...Object.values(this.assets)]
+      if (!this.speakers) {
+        return []
+      }
+      const copied = [...Object.values(this.speakers)]
       copied.sort((a, b) => (a.username < b.username ? -1 : 1))
       copied.sort((a, b) => (a.idx || 0) - (b.idx || 0))
 
       return copied
+    },
+  },
+  methods: {
+    formatDirectoryUrl(item) {
+      if (item.attendeeId) {
+        const dirUrl = `/directories/${this.directoryId}/${item.attendeeId}`
+        return dirUrl
+      } else {
+        return ''
+      }
+    },
+    getHasHref(item) {
+      if (this.directoryId && item.attendeeId) {
+        return 'href'
+      } else {
+        return null
+      }
     },
   },
 }

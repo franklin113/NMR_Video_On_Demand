@@ -16,6 +16,9 @@ export default {
   },
   computed: {
     assetsComputed: function () {
+      if (!this.assets) {
+        return []
+      }
       const copied = [...Object.values(this.assets)]
       copied.sort((a, b) => (a.title < b.title ? -1 : 1))
       copied.sort((a, b) => (a.idx || 0) - (b.idx || 0))
