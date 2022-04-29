@@ -19,6 +19,14 @@
 
     <div id="vod-description">
       <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>
+      <SpeakerSection
+        v-if="selected_video_computed.speakers"
+        :speakers="selected_video_computed.speakers"
+      ></SpeakerSection>
+      <AssetSection
+        v-if="selected_video_computed.assets"
+        :assets="selected_video_computed.assets"
+      ></AssetSection>
     </div>
     <LikeSection
       :current-user-likes="currentUserLikes"
@@ -43,10 +51,14 @@ import vod_utils from '@/utils/vod_utils'
 import LikeSection from '@/components/LikeSection'
 import { LIST_VIEW_ROUTE_NAME } from '@/router/constants'
 import CommentSection from '@/components/comment_section/CommentSection'
+import SpeakerSection from '@/components/SpeakerSection'
+import AssetSection from '@/components/AssetSection'
 export default {
   components: {
     LikeSection,
     CommentSection,
+    SpeakerSection,
+    AssetSection,
   },
   props: {
     selectedVideo: {
