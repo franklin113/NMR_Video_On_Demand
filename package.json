@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name VideoOnDemand --filename VideoOnDemand_v1.0 --entry ./src/components/VideoOnDemand.vue",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit --watchAll",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --fix",
     "emulators": "firebase emulators:start --export-on-exit=\"./data\" --import=\"./data\"",
