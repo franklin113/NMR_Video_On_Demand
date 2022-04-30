@@ -6,7 +6,7 @@
       :[getHasHref(item)]="formatDirectoryUrl(item)"
       class="single-speaker"
     >
-      <div class="single-speaker-div">{{ item.username || '' }}</div>
+      <div class="single-speaker-div">{{ item.first_name + ' ' + item.last_name || '' }}</div>
     </a>
   </div>
 </template>

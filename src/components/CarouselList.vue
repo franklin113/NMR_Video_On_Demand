@@ -4,7 +4,7 @@
     v-model="slide"
     controls
     indicators
-    :background="vodConfig.slideBgColor || defaultConfig.defaultConfig"
+    :background="vodConfig.slide_bg_color || defaultConfig.slide_bg_color"
     :img-width="vodConfig.img_width || defaultConfig.img_width"
     :img-height="vodConfig.img_height || defaultConfig.img_height"
     @sliding-start="onSlideStart"
@@ -33,7 +33,7 @@
 <script>
 export default {
   props: {
-    vodItems: {
+    vodData: {
       type: Array,
       default: () => [],
     },
@@ -46,22 +46,22 @@ export default {
     return {
       slide: 0,
       defaultConfig: {
-        slideBgColor: '#ababab',
-        imgHeight: '1024',
-        imgWidth: '480',
+        slide_bg_color: '#ababab',
+        img_height: '1024',
+        img_width: '480',
       },
     }
   },
   computed: {
     vodItemsComputed: function () {
-      if (!this.vodItems) {
+      if (!this.vodData) {
         return []
       }
       // const copied = [...this.vodItems]
       // copied.sort((a, b)=>{
       //   return a
       // })
-      return this.vodItems
+      return this.vodData
     },
   },
   methods: {

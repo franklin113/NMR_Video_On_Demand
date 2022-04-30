@@ -101,6 +101,10 @@ export default {
       type: Object,
       required: true,
     },
+    vodConfig: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {

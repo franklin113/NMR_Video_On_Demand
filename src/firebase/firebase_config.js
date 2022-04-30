@@ -12,6 +12,6 @@ const app = firebase.initializeApp(firebaseConfig)
 const database = firebase.database()
 const firestore = firebase.firestore()
 const auth = null //firebase.auth()
-database.useEmulator('localhost', 9007)
-firestore.useEmulator('localhost', 8089)
+// database.useEmulator('localhost', 9007)
+// firestore.useEmulator('localhost', 8089)
 export { database, auth, firestore }
