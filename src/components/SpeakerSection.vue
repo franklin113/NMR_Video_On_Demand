@@ -30,7 +30,6 @@ export default {
         return []
       }
       const copied = [...Object.values(this.speakers)]
-      copied.sort((a, b) => (a.username < b.username ? -1 : 1))
       copied.sort((a, b) => (a.idx || 0) - (b.idx || 0))
 
       return copied
@@ -38,15 +37,15 @@ export default {
   },
   methods: {
     formatDirectoryUrl(item) {
-      if (item.attendeeId) {
-        const dirUrl = `/directories/${this.directoryId}/${item.attendeeId}`
+      if (item.event_attendee_id) {
+        const dirUrl = `/directories/${this.directoryId}/${item.event_attendee_id}`
         return dirUrl
       } else {
         return ''
       }
     },
     getHasHref(item) {
-      if (this.directoryId && item.attendeeId) {
+      if (this.directoryId && item.event_attendee_id) {
         return 'href'
       } else {
         return null
@@ -56,6 +55,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
 
 </style>

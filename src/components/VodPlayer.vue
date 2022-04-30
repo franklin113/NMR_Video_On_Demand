@@ -20,11 +20,11 @@
     <div id="vod-description">
       <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>
       <SpeakerSection
-        v-if="selected_video_computed.speakers"
+        v-if="vodConfig.speakerEnabled && selected_video_computed.speakers"
         :speakers="selected_video_computed.speakers"
       ></SpeakerSection>
       <AssetSection
-        v-if="selected_video_computed.assets"
+        v-if="vodConfig.assetsEnabled && selected_video_computed.assets"
         :assets="selected_video_computed.assets"
       ></AssetSection>
     </div>
