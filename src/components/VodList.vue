@@ -7,6 +7,7 @@
           <h1 class="vod-header-text">{{ cat.title }}</h1>
         </div>
         <vod-section
+          v-if="vodConfig && vodConfig.carouselEnabled == false"
           :vod-data="sortedVod[cat.id]"
           :vod-config="vodConfig"
           :active-description-id="activeDescriptionId"
@@ -16,16 +17,29 @@
           @video-clicked="$emit('video-clicked', $event)"
           @description-clicked="$emit('description_clicked', $event)"
         ></vod-section>
+        <CarouselList
+          v-else-if="vodConfig && vodConfig.carouselEnabled == true"
+          :vod-data="sortedVod[cat.id]"
+          :vod-config="vodConfig"
+          :active-description-id="activeDescriptionId"
+          :current-user-likes="currentUserLikes"
+          :video-like-counters="videoLikeCounters"
+          @like-btn-clicked="$emit('like-btn-clicked', $event)"
+          @video-clicked="$emit('video-clicked', $event)"
+          @description-clicked="$emit('description_clicked', $event)"
+        ></CarouselList>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import CarouselList from '@/components/CarouselList'
 import VodSection from '@/components/VodSection'
 export default {
   components: {
     VodSection,
+    CarouselList,
   },
   props: {
     sortedVod: {
