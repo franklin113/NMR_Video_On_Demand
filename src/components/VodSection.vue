@@ -75,9 +75,6 @@
         :current-user-likes="currentUserLikes"
         :video-like-counters="videoLikeCounters"
         :active-description-id="activeDescriptionId"
-        @description_clicked="$emit('description_clicked', $event)"
-        @like-btn-clicked="$emit('like-btn-clicked', $event)"
-        @click="onVideoClick(session, index)"
       ></VideoItem>
     </section>
   </div>

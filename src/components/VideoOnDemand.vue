@@ -18,9 +18,6 @@
         :class="vodConfig.playerClasses || ''"
         :vod-library-id="vodLibraryId"
         :user-data="userData"
-        @description-clicked="description_clicked"
-        @video-clicked="video_clicked"
-        @like-btn-clicked="likeButtonClicked"
       ></component>
     </transition>
     <div id="vod-footer">
@@ -275,6 +272,9 @@ export default {
       self.vodConfig = val != null ? val : {}
     })
 
+    event_bus.$on('like-btn-clicked', this.likeButtonClicked)
+    event_bus.$on('video-clicked', this.video_clicked)
+    event_bus.$on('description-clicked', this.description_clicked)
     // add the logo to the navbar
     $('#webNavigationTop').prepend(`<div class="mckesson-demand-header-logo"></div>`)
   },

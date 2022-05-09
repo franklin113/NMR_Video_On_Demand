@@ -4,7 +4,7 @@
       class="video-click-region"
       :[getHref(session)]="session.video_url"
       target="_Blank"
-      @click="onVideoClick(session, index)"
+      @click="videoClicked(session, index)"
     >
       <span style="display: none" class="t-span">video-click</span>
       <div class="session-thumb-container">
@@ -29,7 +29,7 @@
           :current-user-likes="currentUserLikes"
           :video-like-counters="videoLikeCounters"
           :uid="session.id.toString()"
-          @click="$emit('like-btn-clicked', $event)"
+          @click="likeBtnClicked"
         ></LikeSection>
       </div>
     </a>
@@ -46,7 +46,7 @@
             :length="vodConfig.desc_truncate_length"
             :less="vodConfig.desc_show_less_text"
             :text="session.description || ''"
-            @toggle="$emit('description_clicked', session.id)"
+            @toggle="descriptionClicked(session.id)"
           ></truncate-text>
         </transition>
       </p>
@@ -68,7 +68,7 @@
 <script>
 import TruncateText from '@/components/TruncateText'
 import LikeSection from '@/components/LikeSection'
-
+import event_bus from '@/event_bus/event_bus'
 export default {
   components: {
     TruncateText,
@@ -103,6 +103,16 @@ export default {
   methods: {
     getHref(session) {
       return session.open_in_new_tab ? 'href' : null
+    },
+    likeBtnClicked(event) {
+      event_bus.$emit('like-btn-clicked', event)
+    },
+    videoClicked(session, index) {
+      console.log('video clicked')
+      event_bus.$emit('video-clicked', session, index)
+    },
+    descriptionClicked(event) {
+      event_bus.$emit('description-clicked', event)
     },
   },
 }

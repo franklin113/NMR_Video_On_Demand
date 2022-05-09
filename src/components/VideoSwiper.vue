@@ -8,7 +8,6 @@
         :current-user-likes="currentUserLikes"
         :video-like-counters="videoLikeCounters"
         :active-description-id="activeDescriptionId"
-        @click="onVideoClick(session, index)"
       ></VideoItem>
     </swiper-slide>
     <div slot="pagination" class="swiper-pagination"></div>
