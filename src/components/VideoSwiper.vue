@@ -1,6 +1,6 @@
 <template>
   <swiper :options="swiperOptions">
-    <swiper-slide v-for="(session, index) in vodData" :key="index">
+    <swiper-slide v-for="(session, index) in vodData" :key="session.id">
       <VideoItem
         :session="session"
         :index="index"
@@ -57,7 +57,7 @@ export default {
         slidesPerView: 5,
         spaceBetween: 0,
         freeMode: true,
-        loop: true,
+        loop: false,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',

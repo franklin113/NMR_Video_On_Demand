@@ -71,7 +71,6 @@
       <VideoItem
         :session="session"
         :index="index"
-        :vod-data="sortedVod"
         :vod-config="vodConfig"
         :current-user-likes="currentUserLikes"
         :video-like-counters="videoLikeCounters"
@@ -96,10 +95,7 @@ export default {
       type: String,
       default: '',
     },
-    index: {
-      type: Number,
-      required: true,
-    },
+
     activeDescriptionId: {
       type: String,
       default: '',
