@@ -28,6 +28,7 @@
       <AssetSection
         v-if="vodConfig.assetsEnabled && selected_video_computed.assets"
         :assets="selected_video_computed.assets"
+        :database="database"
       ></AssetSection>
     </div>
     <LikeSection
