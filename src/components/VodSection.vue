@@ -70,6 +70,7 @@
       </div> -->
       <VideoItem
         :session="session"
+        :index="index"
         :vod-data="sortedVod"
         :vod-config="vodConfig"
         :current-user-likes="currentUserLikes"
@@ -94,6 +95,10 @@ export default {
     title: {
       type: String,
       default: '',
+    },
+    index: {
+      type: Number,
+      required: true,
     },
     activeDescriptionId: {
       type: String,

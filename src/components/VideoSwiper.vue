@@ -3,6 +3,7 @@
     <swiper-slide v-for="(session, index) in vodData" :key="index">
       <VideoItem
         :session="session"
+        :index="index"
         :vod-data="vodData"
         :vod-config="vodConfig"
         :current-user-likes="currentUserLikes"

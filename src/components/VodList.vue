@@ -13,9 +13,6 @@
           :active-description-id="activeDescriptionId"
           :current-user-likes="currentUserLikes"
           :video-like-counters="videoLikeCounters"
-          @like-btn-clicked="$emit('like-btn-clicked', $event)"
-          @video-clicked="$emit('video-clicked', $event)"
-          @description-clicked="$emit('description_clicked', $event)"
         ></vod-section>
         <CarouselList
           v-else-if="vodConfig && vodConfig.listViewStyle == 'carousel'"
@@ -24,9 +21,6 @@
           :active-description-id="activeDescriptionId"
           :current-user-likes="currentUserLikes"
           :video-like-counters="videoLikeCounters"
-          @like-btn-clicked="$emit('like-btn-clicked', $event)"
-          @video-clicked="$emit('video-clicked', $event)"
-          @description-clicked="$emit('description_clicked', $event)"
         ></CarouselList>
         <VideoSwiper
           v-else-if="vodConfig && vodConfig.listViewStyle == 'slider'"
@@ -35,9 +29,6 @@
           :active-description-id="activeDescriptionId"
           :current-user-likes="currentUserLikes"
           :video-like-counters="videoLikeCounters"
-          @like-btn-clicked="$emit('like-btn-clicked', $event)"
-          @video-clicked="$emit('video-clicked', $event)"
-          @description-clicked="$emit('description_clicked', $event)"
         ></VideoSwiper>
       </div>
     </section>
