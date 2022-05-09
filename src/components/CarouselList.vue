@@ -5,8 +5,6 @@
     controls
     indicators
     :background="vodConfig.slide_bg_color || defaultConfig.slide_bg_color"
-    :img-width="vodConfig.img_width || defaultConfig.img_width"
-    :img-height="vodConfig.img_height || defaultConfig.img_height"
     @sliding-start="onSlideStart"
     @sliding-end="onSlideEnd"
   >
@@ -16,6 +14,7 @@
       :key="index"
       :caption="item.title"
       :text="item.short_desc"
+      :no-wrap="true"
     >
       <template #img>
         <img

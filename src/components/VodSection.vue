@@ -6,11 +6,11 @@
       class="session-container"
       :class="[session.video_url ? 'has-video-url' : 'no-video-url']"
     >
-      <a
+      <!-- <a
         class="video-click-region"
         :[getHref(session)]="session.video_url"
         target="_Blank"
-        @click="onVideoClick(session, index)"
+        
       >
         <span style="display: none" class="t-span">video-click</span>
         <div class="session-thumb-container">
@@ -67,19 +67,27 @@
             {{ resource.display_name }}
           </a>
         </div>
-      </div>
+      </div> -->
+      <VideoItem
+        :session="session"
+        :vod-data="sortedVod"
+        :vod-config="vodConfig"
+        :current-user-likes="currentUserLikes"
+        :video-like-counters="videoLikeCounters"
+        :active-description-id="activeDescriptionId"
+        @description_clicked="$emit('description_clicked', $event)"
+        @like-btn-clicked="$emit('like-btn-clicked', $event)"
+        @click="onVideoClick(session, index)"
+      ></VideoItem>
     </section>
   </div>
 </template>
 
 <script>
-import TruncateText from '@/components/TruncateText'
-import LikeSection from '@/components/LikeSection'
-
+import VideoItem from '@/components/VideoItem'
 export default {
   components: {
-    TruncateText,
-    LikeSection,
+    VideoItem,
   },
   props: {
     vodData: {

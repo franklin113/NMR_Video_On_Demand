@@ -7,7 +7,7 @@
           <h1 class="vod-header-text">{{ cat.title }}</h1>
         </div>
         <vod-section
-          v-if="vodConfig && vodConfig.carouselEnabled == false"
+          v-if="vodConfig && vodConfig.listViewStyle == 'grid'"
           :vod-data="sortedVod[cat.id]"
           :vod-config="vodConfig"
           :active-description-id="activeDescriptionId"
@@ -18,7 +18,7 @@
           @description-clicked="$emit('description_clicked', $event)"
         ></vod-section>
         <CarouselList
-          v-else-if="vodConfig && vodConfig.carouselEnabled == true"
+          v-else-if="vodConfig && vodConfig.listViewStyle == 'carousel'"
           :vod-data="sortedVod[cat.id]"
           :vod-config="vodConfig"
           :active-description-id="activeDescriptionId"
@@ -28,6 +28,17 @@
           @video-clicked="$emit('video-clicked', $event)"
           @description-clicked="$emit('description_clicked', $event)"
         ></CarouselList>
+        <VideoSwiper
+          v-else-if="vodConfig && vodConfig.listViewStyle == 'slider'"
+          :vod-data="sortedVod[cat.id]"
+          :vod-config="vodConfig"
+          :active-description-id="activeDescriptionId"
+          :current-user-likes="currentUserLikes"
+          :video-like-counters="videoLikeCounters"
+          @like-btn-clicked="$emit('like-btn-clicked', $event)"
+          @video-clicked="$emit('video-clicked', $event)"
+          @description-clicked="$emit('description_clicked', $event)"
+        ></VideoSwiper>
       </div>
     </section>
   </div>
@@ -36,10 +47,12 @@
 <script>
 import CarouselList from '@/components/CarouselList'
 import VodSection from '@/components/VodSection'
+import VideoSwiper from '@/components/VideoSwiper'
 export default {
   components: {
     VodSection,
     CarouselList,
+    VideoSwiper,
   },
   props: {
     sortedVod: {
