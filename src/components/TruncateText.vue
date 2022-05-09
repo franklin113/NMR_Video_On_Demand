@@ -8,6 +8,7 @@
         {{ clamp }}
       </button>
     </div>
+
     <div v-else-if="!show && isHTML">
       <span :class="textClass" v-html="truncate(text)" />
       <button v-if="showToggle && text.length >= length" :class="actionClass" @click="toggle">
