@@ -22,6 +22,10 @@ export default {
       type: String,
       default: '',
     },
+    libraryId: {
+      type: String,
+      required: true,
+    },
   },
 
   computed: {
@@ -37,15 +41,17 @@ export default {
   },
   methods: {
     formatDirectoryUrl(item) {
-      if (item.event_attendee_id) {
-        const dirUrl = `/directories/${this.directoryId}/${item.event_attendee_id}`
+      console.log('format directory: ', item)
+      if (item.attendee_id) {
+        const dirUrl = `/directories/${this.directoryId}/${item.attendee_id}?from=libraries/${this.libraryId}`
         return dirUrl
       } else {
         return ''
       }
     },
     getHasHref(item) {
-      if (this.directoryId && item.event_attendee_id) {
+      if (this.directoryId && item.attendee_id) {
+        console.log('get href: ', item)
         return 'href'
       } else {
         return null

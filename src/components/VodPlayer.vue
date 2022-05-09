@@ -22,6 +22,8 @@
       <SpeakerSection
         v-if="vodConfig.speakerEnabled && selected_video_computed.speakers"
         :speakers="selected_video_computed.speakers"
+        :directory-id="vodConfig.directoryId.toString() || ''"
+        :library-id="vodConfig.libraryId.toString()"
       ></SpeakerSection>
       <AssetSection
         v-if="vodConfig.assetsEnabled && selected_video_computed.assets"
