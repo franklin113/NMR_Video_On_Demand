@@ -31,13 +31,13 @@ Minimum Required Fields:
 This VOD system allows for video level permission control.
 By default, everyone sees everything. To give access to everyone, leave the permissions column empty.
 
-In the html page page, there is a object called "vod_user_data". This contains information about the user. They key attribute here is "user_type". Whatever you put here provides access control to video content.
+In the html page page, there is a object called "vod_user_data". This contains information about the user. They key attribute here is "userType". Whatever you put here provides access control to video content.
 
 For example, the below configuration would assign the current user to admin. The only videos the user would see are videos assigned the "admin" permission OR a blank cell in the permissions colummn.
 
     const vod_user_data = {
         ...
-        user_type: "admin"
+        userType: "admin"
     };
 
 To configure a video for admin access, go to your google sheet and add the admin value like so:
@@ -53,7 +53,7 @@ Below is an example of multiple user types for a single video.
     // NMR_Video_On_Demand.html
     const vod_user_data = {
         ...
-        user_type: [[user_role]] // admin | guest | vip
+        userType: [[user_role]] // admin | guest | vip
     };
 
 | id  | permissions       | category |
@@ -100,9 +100,9 @@ The sort order <i>within</i> the category it lives in.
 
 ## permissions
 ### comma seperated list
-A comma seperated list of user access this video has. If left empty, everyone has access. If filled with a value, an exact match is used on the "user_type" data attribute.
+A comma seperated list of user access this video has. If left empty, everyone has access. If filled with a value, an exact match is used on the "userType" data attribute.
 For example,
-if permissions includes 'admin' a user_type of 'admin' is matched.
+if permissions includes 'admin' a userType of 'admin' is matched.
 
 ## category
 ### string

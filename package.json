@@ -1,26 +1,46 @@
 {
-  "name": "nmr_video_on_demand",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "video-on-demand-comps",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "push": "gsutil -m cp -r src/NMR_Video_On_Demand.js gs://cgcaci21.appspot.com/video_on_demand/video_on_demand.js",
-    "emulators": "firebase emulators:start --export-on-exit=\"./data\" --import=\"./data\""
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name VideoOnDemand --filename VideoOnDemand_v1.0 --entry ./src/components/VideoOnDemand.vue",
+    "test:unit": "vue-cli-service test:unit --watchAll",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint --fix",
+    "emulators": "firebase emulators:start --export-on-exit=\"./data\" --import=\"./data\"",
+    "push": "gsutil -m cp -r dist/VideoOnDemand_v1.0.umd.min.js gs://cgcaci21.appspot.com/video-on-demand/VideoOnDemand_v1.0.umd.min.js & gsutil -m cp -r  dist/VideoOnDemand_v1.0.css gs://cgcaci21.appspot.com/video-on-demand/VideoOnDemand_v1.0.css",
+    "build-push": "npm run test:unit && npm run build && npm run push"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/franklin113/NMR_Video_On_Demand.git"
+  "dependencies": {
+    "bootstrap": "^4.6.1",
+    "bootstrap-vue": "^2.22.0",
+    "core-js": "^3.6.5",
+    "firebase": "^8.2.3",
+    "lodash": "^4.17.21",
+    "vue": "^2.6.14",
+    "vue-awesome-swiper": "^3.1.3",
+    "vue-router": "^3.5.3"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/franklin113/NMR_Video_On_Demand/issues"
-  },
-  "homepage": "https://github.com/franklin113/NMR_Video_On_Demand#readme",
   "devDependencies": {
-    "eslint": "^8.0.1",
+    "@babel/core": "^7.15.8",
+    "@babel/eslint-parser": "^7.15.8",
+    "@faker-js/faker": "^6.0.0-beta.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-e2e-cypress": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "^4.5.17",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/test-utils": "^1.0.3",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "2.4.1"
+    "eslint-plugin-prettier-vue": "^3.1.0",
+    "eslint-plugin-vue": "^8.2.0",
+    "prettier": "^2.5.1",
+    "vue-template-compiler": "^2.6.11"
   }
 }
