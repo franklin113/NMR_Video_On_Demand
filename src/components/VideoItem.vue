@@ -13,12 +13,12 @@
         </div>
         <div
           v-if="vodConfig.thumbnail_tag === 'div'"
-          :style="{ backgroundImage: 'url(' + session.thumb_with_play_button + ')' }"
+          :style="{ backgroundImage: 'url(' + session.thumbnail + ')' }"
           class="thumbnail-container"
         ></div>
         <img
           v-else-if="vodConfig.thumbnail_tag === 'img' || !vodConfig.thumbnail_tag"
-          :src="session.thumb_with_play_button"
+          :src="session.thumbnail"
           alt="img"
           style="width: 100%; height: auto"
         />
@@ -104,6 +104,15 @@ export default {
       default: '',
     },
   },
+  computed: {
+    // styles: function () {
+    //   return {
+    //     backgroundImage: `url(${this.session.thumbnail})`,
+    //     backgroundColor: '#fff',
+    //     height: '250px',
+    //   }
+    // },
+  },
   methods: {
     getHref(session) {
       return session.open_in_new_tab ? 'href' : null
@@ -123,5 +132,47 @@ export default {
 </script>
 
 <style scoped>
+.single-vod-item {
+  background-size: cover;
+}
+.video-title-section {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.session-title {
+  margin-right: 30px;
+  margin-left: 30px;
+}
+a.video-click-region:hover {
+  text-decoration: none;
+}
+.like-section {
+  color: #000;
+  flex: 0 0 20%;
+  max-width: 20%;
+}
 
+.session-title {
+  color: #000;
+}
+
+/* swiper version */
+.swiper-slide .single-vod-item {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.swiper-slide .video-title-section {
+  align-items: center;
+}
+
+.swiper-slide .session-title {
+  font-size: 20px;
+  margin-left: 0;
+  flex: 1 0 80%;
+  max-width: 80%;
+  text-align: left;
+  margin-right: 0;
+}
 </style>

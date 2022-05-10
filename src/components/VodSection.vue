@@ -134,7 +134,14 @@ export default {
 <style scoped>
 .vod-category {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+.session-container {
+  margin: 1em;
+  flex: 0 0 30%;
 }
 
 /* .like-section {
@@ -142,25 +149,4 @@ export default {
   right: 0;
   top: 0;
 } */
-.video-title-section {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-}
-.session-title {
-  margin-right: 30px;
-  margin-left: 30px;
-}
-a.video-click-region:hover {
-  text-decoration: none;
-}
-.like-section {
-  color: #000;
-}
-h2.session-title {
-  color: #000;
-}
-section.session-container {
-  margin: 1em;
-}
 </style>
