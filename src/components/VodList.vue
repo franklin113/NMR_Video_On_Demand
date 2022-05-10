@@ -1,6 +1,14 @@
 <template>
   <div id="vod-list-component">
     <div id="vod-page-title-section"></div>
+    <CarouselList
+      v-if="showFeaturedItems && vodConfig.featuredVideosSection == 'carousel'"
+      :vod-data="featuredItems"
+      :vod-config="vodConfig"
+      :active-description-id="activeDescriptionId"
+      :current-user-likes="currentUserLikes"
+      :video-like-counters="videoLikeCounters"
+    ></CarouselList>
     <section class="sessions-container">
       <div v-for="(cat, index) in categories" :key="index" class="vod-category-wrapper">
         <div v-if="cat.show" class="vod-category-header">
@@ -39,6 +47,7 @@
 import CarouselList from '@/components/CarouselList'
 import VodSection from '@/components/VodSection'
 import VideoSwiper from '@/components/VideoSwiper'
+import getUniqueRandomNumbers from '@/utils/getUniqueRandomNumbers'
 export default {
   components: {
     VodSection,
@@ -69,6 +78,35 @@ export default {
     videoLikeCounters: {
       type: Object,
       default: () => {},
+    },
+    vodSessions: {
+      type: Array,
+      required: true,
+    },
+  },
+  computed: {
+    showFeaturedItems() {
+      if (
+        this.vodConfig &&
+        (this.vodConfig.featuredVideosSection === 'off' || !this.vodConfig.featuredVideosSection)
+      ) {
+        return false
+      } else {
+        return true
+      }
+    },
+    featuredItems() {
+      if (this.vodConfig.featuredVideosSectionQuery == 'random') {
+        const uniqueNums = getUniqueRandomNumbers(
+          this.vodConfig.featuredVideosSectionCount || 5,
+          0,
+          this.vodSessions.length
+        )
+        const uniqueVideos = uniqueNums.map((item) => this.vodSessions[item])
+        return uniqueVideos
+      } else {
+        return []
+      }
     },
   },
 }
