@@ -1,5 +1,6 @@
 <template>
   <div id="assets-component">
+    <div class="speaker-section-title">Assets:</div>
     <a
       v-for="(item, index) in assetsComputed"
       :key="index"

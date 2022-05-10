@@ -1,10 +1,15 @@
 <template>
-  <div>
-    <div v-if="!show && !isHTML">
-      <span :class="textClass">
+  <div class="truncate-text-component">
+    <div v-if="!show && !isHTML" class="truncate-text-inner">
+      <span class="truncate-text" :class="textClass">
         {{ truncate(text) }}
       </span>
-      <button v-if="showToggle && text.length >= length" :class="actionClass" @click="toggle">
+      <button
+        v-if="showToggle && text.length >= length"
+        class="truncate-btn"
+        :class="actionClass"
+        @click="toggle"
+      >
         {{ clamp }}
       </button>
     </div>

@@ -31,7 +31,7 @@ describe('speaker section', () => {
       },
     })
     const items = wrapper.findAll('.single-speaker')
-    expect(wrapper.find('#speakers-component').exists()).toBe(true)
+    expect(wrapper.find('.speakers-component').exists()).toBe(true)
     expect(items.length).toBe(0)
   })
 })

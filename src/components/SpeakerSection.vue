@@ -1,10 +1,12 @@
 <template>
-  <div id="speakers-component">
+  <div class="speakers-component">
+    <div class="speaker-section-title">Speakers:</div>
     <a
       v-for="(item, index) in speakersComputed"
       :key="index"
       :[getHasHref(item)]="formatDirectoryUrl(item)"
       class="single-speaker"
+      target="_blank"
     >
       <div class="single-speaker-div">
         {{ (item.first_name + ' ' + item.last_name || '') | nameFormat }}
@@ -54,7 +56,7 @@ export default {
     formatDirectoryUrl(item) {
       console.log('format directory: ', item)
       if (item.event_attendee_id) {
-        const dirUrl = `/directories/${this.directoryId}/${item.event_attendee_id}?from=/libraries/${this.libraryId}`
+        const dirUrl = `/directories/${this.directoryId}/attendee/${item.event_attendee_id}?from=/libraries/${this.libraryId}`
         return dirUrl
       } else {
         return ''

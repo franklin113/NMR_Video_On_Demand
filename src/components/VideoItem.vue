@@ -13,9 +13,24 @@
         </div>
         <div
           v-if="vodConfig.thumbnail_tag === 'div'"
-          :style="{ backgroundImage: 'url(' + session.thumbnail + ')' }"
+          :style="imgStyles"
           class="thumbnail-container"
-        ></div>
+        >
+          <div
+            v-show="vodConfig.titlePosition === 'overlay'"
+            class="video-title-section title-overlay"
+          >
+            <h2 class="session-title">
+              {{ session.title }}
+            </h2>
+            <LikeSection
+              :current-user-likes="currentUserLikes"
+              :video-like-counters="videoLikeCounters"
+              :uid="session.id.toString()"
+              @click="likeBtnClicked"
+            ></LikeSection>
+          </div>
+        </div>
         <img
           v-else-if="vodConfig.thumbnail_tag === 'img' || !vodConfig.thumbnail_tag"
           :src="session.thumbnail"
@@ -23,8 +38,10 @@
           style="width: 100%; height: auto"
         />
       </div>
-      <div class="video-title-section">
-        <h2 class="session-title">{{ session.title }}</h2>
+      <div v-if="vodConfig.titlePosition === 'title_section'" class="video-title-section">
+        <h2 class="session-title">
+          {{ session.title }}
+        </h2>
         <LikeSection
           :current-user-likes="currentUserLikes"
           :video-like-counters="videoLikeCounters"
@@ -41,7 +58,7 @@
             :truncated="false"
             :show="activeDescriptionId === session.id"
             collapsed-text-class="collapsed-text"
-            class="expended-text"
+            class="expended-text video-item-text-trunc"
             :clamp="vodConfig.desc_show_more_text"
             :length="vodConfig.desc_truncate_length"
             :less="vodConfig.desc_show_less_text"
@@ -50,6 +67,13 @@
           ></truncate-text>
         </transition>
       </p>
+      <SpeakerSection
+        v-if="vodConfig.speakerEnabled && session.speakers"
+        class="video-item-speaker-section"
+        :speakers="session.speakers"
+        :directory-id="vodConfig.directoryId.toString() || ''"
+        :library-id="vodConfig.libraryId.toString()"
+      ></SpeakerSection>
     </div>
     <div class="resources-section d-flex flex-wrap">
       <div
@@ -62,6 +86,15 @@
         </a>
       </div>
     </div>
+    <div v-if="vodConfig.showMoreText" class="show-more-section">
+      <a
+        class="show-more-a-tag"
+        :[getHref(session)]="session.video_url"
+        target="_Blank"
+        @click="videoClicked(session, index)"
+        >{{ vodConfig.showMoreText }}</a
+      >
+    </div>
   </div>
 </template>
 
@@ -69,10 +102,12 @@
 import TruncateText from '@/components/TruncateText'
 import LikeSection from '@/components/LikeSection'
 import event_bus from '@/event_bus/event_bus'
+import SpeakerSection from '@/components/SpeakerSection'
 export default {
   components: {
     TruncateText,
     LikeSection,
+    SpeakerSection,
   },
   props: {
     session: {
@@ -105,13 +140,16 @@ export default {
     },
   },
   computed: {
-    // styles: function () {
-    //   return {
-    //     backgroundImage: `url(${this.session.thumbnail})`,
-    //     backgroundColor: '#fff',
-    //     height: '250px',
-    //   }
-    // },
+    imgStyles: function () {
+      const style = {}
+      if (this.session.thumbnail) {
+        style.backgroundImage = `url(${this.session.thumbnail})`
+      }
+      if (this.session.background_color) {
+        style.backgroundColor = this.session.background_color
+      }
+      return style
+    },
   },
   methods: {
     getHref(session) {
@@ -139,6 +177,7 @@ export default {
   position: relative;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 }
 .session-title {
   margin-right: 30px;
@@ -174,5 +213,47 @@ a.video-click-region:hover {
   max-width: 80%;
   text-align: left;
   margin-right: 0;
+}
+
+.single-vod-item {
+  background-color: #e4e4e4;
+  border-radius: 1em;
+  -webkit-box-shadow: -1px 2px 13px -3px rgba(0, 0, 0, 0.47);
+  box-shadow: -1px 2px 13px -3px rgba(0, 0, 0, 0.47);
+  transition: all 0.3s;
+}
+.single-vod-item:hover {
+  -webkit-box-shadow: -1px 2px 13px 3px rgba(0, 0, 0, 0.47);
+  box-shadow: -1px 2px 13px 3px rgba(0, 0, 0, 0.47);
+}
+.thumbnail-container {
+  height: 150px;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+}
+.video-title-section.title-overlay {
+  width: 100%;
+  padding: 1em;
+}
+.video-item-speaker-section {
+  text-align: left;
+  padding-left: 1em;
+  padding-bottom: 1em;
+}
+.video-item-text-trunc {
+  text-align: left;
+  padding-left: 1em;
+  padding-top: 0.5em;
+}
+.video-click-region {
+  cursor: pointer;
+}
+.show-more-section {
+  text-align: left;
+  padding-left: 1em;
+  padding-bottom: 1em;
+}
+.show-more-section a {
+  cursor: pointer;
 }
 </style>
