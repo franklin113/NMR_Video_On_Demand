@@ -111,7 +111,7 @@ export default {
       copy_of_original_videos = copy_of_original_videos.filter((item) => {
         let is_valid = false
 
-        let permissions_arr = vod_utils.create_comma_seperated_arr(item.permissions || '')
+        let permissions_arr = Object.keys(item.permissions || {})
         if (
           permissions_arr.length == 0 ||
           permissions_arr.includes(this.userType) ||

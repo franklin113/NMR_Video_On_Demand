@@ -6,13 +6,25 @@
       :[getHasHref(item)]="formatDirectoryUrl(item)"
       class="single-speaker"
     >
-      <div class="single-speaker-div">{{ item.first_name + ' ' + item.last_name || '' }}</div>
+      <div class="single-speaker-div">
+        {{ (item.first_name + ' ' + item.last_name || '') | nameFormat }}
+      </div>
     </a>
   </div>
 </template>
 
 <script>
 export default {
+  filters: {
+    nameFormat: function (value) {
+      const arr = value.split(' ')
+      for (var i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1)
+      }
+      const str2 = arr.join(' ')
+      return str2
+    },
+  },
   props: {
     speakers: {
       type: Object,
@@ -27,7 +39,6 @@ export default {
       required: true,
     },
   },
-
   computed: {
     speakersComputed: function () {
       if (!this.speakers) {
@@ -42,15 +53,15 @@ export default {
   methods: {
     formatDirectoryUrl(item) {
       console.log('format directory: ', item)
-      if (item.attendee_id) {
-        const dirUrl = `/directories/${this.directoryId}/${item.attendee_id}?from=libraries/${this.libraryId}`
+      if (item.event_attendee_id) {
+        const dirUrl = `/directories/${this.directoryId}/${item.event_attendee_id}?from=/libraries/${this.libraryId}`
         return dirUrl
       } else {
         return ''
       }
     },
     getHasHref(item) {
-      if (this.directoryId && item.attendee_id) {
+      if (this.directoryId && item.event_attendee_id) {
         console.log('get href: ', item)
         return 'href'
       } else {

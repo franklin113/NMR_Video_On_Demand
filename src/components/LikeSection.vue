@@ -40,7 +40,7 @@ export default {
   methods: {
     clicked: debounce(function () {
       this.$emit('click', { id: this.uid, state: !this.active })
-    }, 200),
+    }, 300),
   },
 }
 </script>

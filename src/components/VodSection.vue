@@ -1,6 +1,6 @@
 <template>
   <div class="vod-category">
-    <section
+    <div
       v-for="(session, index) in vodData"
       :key="index"
       class="session-container"
@@ -76,7 +76,7 @@
         :video-like-counters="videoLikeCounters"
         :active-description-id="activeDescriptionId"
       ></VideoItem>
-    </section>
+    </div>
   </div>
 </template>
 

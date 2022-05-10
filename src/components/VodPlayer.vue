@@ -35,7 +35,7 @@
       :current-user-likes="currentUserLikes"
       :video-like-counters="videoLikeCounters"
       :uid="id"
-      @click="$emit('like-btn-clicked', $event)"
+      @click="likeBtnClicked"
     ></LikeSection>
     <CommentSection
       :firestore="firestore"
@@ -56,6 +56,8 @@ import { LIST_VIEW_ROUTE_NAME } from '@/router/constants'
 import CommentSection from '@/components/comment_section/CommentSection'
 import SpeakerSection from '@/components/SpeakerSection'
 import AssetSection from '@/components/AssetSection'
+import event_bus from '@/event_bus/event_bus'
+
 export default {
   components: {
     LikeSection,
@@ -196,6 +198,9 @@ export default {
     },
     back_button_clicked() {
       this.$router.push({ name: LIST_VIEW_ROUTE_NAME })
+    },
+    likeBtnClicked(event) {
+      event_bus.$emit('like-btn-clicked', event)
     },
   },
 }

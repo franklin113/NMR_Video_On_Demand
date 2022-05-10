@@ -7,23 +7,27 @@ describe('speaker section', () => {
       propsData: {
         speakers: {
           speaker1: {
-            username: 'Tim Franklin',
+            first_name: 'tim',
+            last_name: 'franklin',
           },
           speaker2: {
-            username: 'James Wilkes',
+            first_name: 'james',
+            last_name: 'wilkes',
           },
         },
         directoryId: '123',
+        libraryId: '123',
       },
     })
     const items = wrapper.findAll('.single-speaker')
-    expect(items.at(1).text()).toBe('Tim Franklin')
+    expect(items.at(0).text()).toBe('Tim Franklin')
   })
   test('it does not crash', () => {
     const wrapper = shallowMount(SpeakerSection, {
       propsData: {
         speakers: null,
         directoryId: null,
+        libraryId: '123',
       },
     })
     const items = wrapper.findAll('.single-speaker')

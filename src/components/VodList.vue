@@ -3,7 +3,7 @@
     <div id="vod-page-title-section"></div>
     <section class="sessions-container">
       <div v-for="(cat, index) in categories" :key="index" class="vod-category-wrapper">
-        <div class="vod-category-header">
+        <div v-if="cat.show" class="vod-category-header">
           <h1 class="vod-header-text">{{ cat.title }}</h1>
         </div>
         <vod-section

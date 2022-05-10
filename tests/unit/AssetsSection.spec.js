@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import AssetsSection from '@/components/AssetSection'
 
-describe('assets section', () => {
+describe.skip('assets section', () => {
   test('it does not crash', () => {
     const wrapper = shallowMount(AssetsSection, {
       propsData: {
