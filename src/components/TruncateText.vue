@@ -100,7 +100,7 @@ export default {
       return this.text.length
     },
     showToggle() {
-      return this.textLength > this.length
+      return this.show_truncate_toggle && this.textLength > this.length
     },
   },
   watch: {
@@ -117,7 +117,7 @@ export default {
       if (string) {
         if (this.type === 'html') return h2p(string, this.length)
         let tempStr = string.toString().substring(0, this.length)
-        if (tempStr.length > 50) {
+        if (tempStr.length > this.length - 3) {
           tempStr += '...'
         }
         return tempStr

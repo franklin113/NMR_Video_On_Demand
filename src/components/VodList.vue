@@ -8,6 +8,8 @@
       :active-description-id="activeDescriptionId"
       :current-user-likes="currentUserLikes"
       :video-like-counters="videoLikeCounters"
+      :random-number-indexes="randomNumberIndexes"
+      :generic-images="genericImages"
     ></CarouselList>
     <section class="sessions-container">
       <div v-for="(cat, index) in categories" :key="index" class="vod-category-wrapper">
@@ -29,6 +31,8 @@
           :active-description-id="activeDescriptionId"
           :current-user-likes="currentUserLikes"
           :video-like-counters="videoLikeCounters"
+          :random-number-indexes="randomNumberIndexes"
+          :generic-images="genericImages"
         ></CarouselList>
         <VideoSwiper
           v-else-if="vodConfig && vodConfig.listViewStyle == 'slider'"
@@ -82,6 +86,14 @@ export default {
     vodSessions: {
       type: Array,
       required: true,
+    },
+    randomNumberIndexes: {
+      type: Array,
+      default: () => [],
+    },
+    genericImages: {
+      type: Object,
+      default: () => {},
     },
   },
   computed: {

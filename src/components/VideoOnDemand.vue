@@ -18,6 +18,8 @@
         :class="vodConfig.playerClasses || ''"
         :vod-library-id="vodLibraryId"
         :user-data="userData"
+        :random-number-indexes="randomGenericImagesIndexes"
+        :generic-images="genericImages"
       ></component>
     </transition>
     <div id="vod-footer">
@@ -51,7 +53,7 @@ import VodPlayer from '@/components/VodPlayer'
 import { LIST_VIEW_ROUTE_NAME, VIDEO_PLAYER_ROUTE_NAME } from '@/router/constants'
 import { omit } from 'lodash'
 import event_bus from '@/event_bus/event_bus'
-
+import getUniqueRandomNumbers from '@/utils/getUniqueRandomNumbers'
 export default {
   name: 'VideoOnDemand',
   components: {
@@ -90,6 +92,10 @@ export default {
       likedCommentsRef: null,
       videoLikeCountersRef: null,
       videoLikeCounters: {},
+      genericImages: {},
+      genericImagesRef: null,
+      numGenericImages: 0,
+      randomGenericImagesIndexes: null,
     }
   },
   computed: {
@@ -183,6 +189,7 @@ export default {
       final_id = null
     }
     const parent_vod_ref = this.database.ref('vod_libraries')
+    this.genericImagesRef = this.database.ref('vod_libraries').child('generic_images')
     const vod_ref = parent_vod_ref.child('videos').child(final_id)
     const vodConfig_ref = parent_vod_ref.child('configs').child(final_id)
     this.likedVideosRef = parent_vod_ref.child('user-video-likes').child(this.userData.attendeeId)
@@ -271,12 +278,26 @@ export default {
     vod_utils.add_listener(vodConfig_ref, (val) => {
       self.vodConfig = val != null ? val : {}
     })
+    vod_utils.add_listener(this.genericImagesRef, (val) => {
+      self.genericImages = val != null ? val : {}
+      self.numGenericImages = Object.keys(self.genericImages).length
+      if (!self.randomGenericImagesIndexes) {
+        self.randomGenericImagesIndexes = getUniqueRandomNumbers(
+          this.vodConfig.featuredVideosSectionCount + 5 || 10,
+          0,
+          self.numGenericImages
+        )
+      }
+    })
 
     event_bus.$on('like-btn-clicked', this.likeButtonClicked)
     event_bus.$on('video-clicked', this.video_clicked)
     event_bus.$on('description-clicked', this.description_clicked)
     // add the logo to the navbar
     $('#webNavigationTop').prepend(`<div class="mckesson-demand-header-logo"></div>`)
+  },
+  destroyed() {
+    this.genericImagesRef.off('value')
   },
   methods: {
     handle_child_added(target_arr, new_item) {

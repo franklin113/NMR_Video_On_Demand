@@ -18,7 +18,6 @@
     </div>
 
     <div id="vod-description">
-      <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>
       <SpeakerSection
         v-if="vodConfig.speakerEnabled && selected_video_computed.speakers"
         :speakers="selected_video_computed.speakers"
@@ -30,6 +29,9 @@
         :assets="selected_video_computed.assets"
         :database="database"
       ></AssetSection>
+      <div class="description-wrapper">
+        <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>
+      </div>
     </div>
     <LikeSection
       :current-user-likes="currentUserLikes"
@@ -206,6 +208,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
+#assets-component {
+  text-align: left;
+}
 
+#vod-description {
+  padding: 1em;
+}
+
+.description-wrapper {
+  text-align: left;
+}
 </style>

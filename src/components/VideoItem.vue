@@ -62,7 +62,8 @@
             :clamp="vodConfig.desc_show_more_text"
             :length="vodConfig.desc_truncate_length"
             :less="vodConfig.desc_show_less_text"
-            :text="session.description || ''"
+            :show_truncate_toggle="vodConfig.show_truncate_toggle || false"
+            :text="session.short_description || ''"
             @toggle="descriptionClicked(session.id)"
           ></truncate-text>
         </transition>

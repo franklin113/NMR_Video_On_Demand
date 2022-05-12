@@ -1,5 +1,5 @@
 <template>
-  <swiper :options="swiperOptions">
+  <swiper :modules="modules" :options="swiperOptions">
     <swiper-slide v-for="(session, index) in vodData" :key="session.id">
       <VideoItem
         :session="session"
@@ -19,7 +19,10 @@
 
 <script>
 import 'swiper/dist/css/swiper.css'
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
+
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+
 import VideoItem from '@/components/VideoItem'
 
 export default {
@@ -51,16 +54,23 @@ export default {
       default: () => {},
     },
   },
+
   data() {
     return {
+      modules: [Navigation, Pagination, Scrollbar, A11y],
+
       swiperOptions: {
-        slidesPerView: 5,
+        slidesPerView: 3,
         spaceBetween: 0,
         freeMode: true,
         loop: false,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
+        },
+        scrollbar: {
+          draggable: true,
+          hide: false,
         },
       },
     }
