@@ -4,9 +4,11 @@
       <i class="fas fa-arrow-left"></i> Back
       <!--<router-link class="back-button-link" :to="{ name : 'list' }"> Back</router-link>-->
     </div>
-    <h1 v-if="selected_video_computed.title || title">
-      {{ title || selected_video_computed.title }}
-    </h1>
+    <div class="embed-title-wrapper">
+      <h1 v-if="selected_video_computed.title || title">
+        {{ title || selected_video_computed.title }}
+      </h1>
+    </div>
     <div class="embed-container">
       <b-embed
         ref="videoplayer"
@@ -28,6 +30,7 @@
         v-if="vodConfig.assetsEnabled && selected_video_computed.assets"
         :assets="selected_video_computed.assets"
         :database="database"
+        :vod-config="vodConfig"
       ></AssetSection>
       <div class="description-wrapper">
         <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>
@@ -214,10 +217,14 @@ export default {
 }
 
 #vod-description {
-  padding: 1em;
+  padding: 0em;
 }
 
 .description-wrapper {
   text-align: left;
+}
+.back-button {
+  display: inline-block;
+  cursor: pointer;
 }
 </style>
