@@ -20,6 +20,7 @@
         :user-data="userData"
         :random-number-indexes="randomGenericImagesIndexes"
         :generic-images="genericImages"
+        :num-generic-images="numGenericImages"
       ></component>
     </transition>
     <div id="vod-footer">
