@@ -267,7 +267,16 @@ export default {
 #player-title-text {
   color: #fff;
 }
+.embed-title-wrapper {
+  height: 80px;
+}
 .embed-title-wrapper-inner {
   background-color: #00000078;
+  height: 100%;
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
