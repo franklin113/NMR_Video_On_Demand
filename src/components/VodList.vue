@@ -1,6 +1,7 @@
 <template>
   <div id="vod-list-component">
     <div id="vod-page-title-section"></div>
+    <TagsControl :vod-items="vodSessions"></TagsControl>
     <CarouselList
       v-if="showFeaturedItems && vodConfig.featuredVideosSection == 'carousel'"
       :vod-data="featuredItems"
@@ -52,11 +53,13 @@ import CarouselList from '@/components/CarouselList'
 import VodSection from '@/components/VodSection'
 import VideoSwiper from '@/components/VideoSwiper'
 import getUniqueRandomNumbers from '@/utils/getUniqueRandomNumbers'
+import TagsControl from '@/components/TagsControl'
 export default {
   components: {
     VodSection,
     CarouselList,
     VideoSwiper,
+    TagsControl,
   },
   props: {
     sortedVod: {
