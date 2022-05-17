@@ -128,7 +128,7 @@ export default {
           is_valid = true
         }
 
-        if (item.idx == -100) {
+        if (item.show === false) {
           is_valid = false
         }
         return is_valid
