@@ -21,7 +21,12 @@
             class="video-title-section title-overlay"
           >
             <h2 class="session-title">
-              {{ session.title }}
+              <span class="session-title-id">{{
+                vodConfig.video_id_display_format && session.poster_number
+                  ? vodConfig.video_id_display_format.replace(/\{\{ID\}\}/, session.poster_number)
+                  : ''
+              }}</span>
+              <span class="session-title-text">{{ session.title }}</span>
             </h2>
             <LikeSection
               :current-user-likes="currentUserLikes"
