@@ -140,6 +140,10 @@ div#alpha-select {
 .single-tag {
   padding: 1em;
 }
+.single-tag-text,
+.letter-text {
+  text-transform: capitalize;
+}
 
 .list-complete-item {
   transition: all 1s;
