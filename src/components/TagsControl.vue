@@ -115,13 +115,13 @@ div#alpha-select {
   justify-content: center;
   align-items: center;
 }
-.single-alpha-select .letter-text,
+.single-alpha-select .single-alpha-letter,
 .single-tag-a .single-tag {
   padding: 1em;
   background-color: #fff;
   transition: all 0.3s;
 }
-.single-alpha-select.active .letter-text,
+.single-alpha-select.active .single-alpha-letter,
 .single-tag-a.active .single-tag {
   padding: 1em;
   background-color: rgb(56, 49, 98);
@@ -153,6 +153,5 @@ div#alpha-select {
 }
 .list-complete-leave-active {
   position: absolute;
-  top: 0;
 }
 </style>
