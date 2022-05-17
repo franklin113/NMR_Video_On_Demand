@@ -1,15 +1,19 @@
 <template>
   <div id="assets-component">
-    <div class="speaker-section-title">Assets:</div>
-    <a
-      v-for="(item, index) in assetsComputed"
-      :key="index"
-      class="single-asset"
-      :[getHasHref(item)]="item.url"
-      target="_blank"
-    >
-      <div class="single-asset-div">{{ item.title || 'Asset ' + index.toString() }}</div>
-    </a>
+    <div class="asset-section-t-wrapper">
+      <span class="asset-section-title">{{ vodConfig.asset_section_title || 'Assets:' }}</span>
+    </div>
+    <div class="asset-items-wrapper">
+      <a
+        v-for="(item, index) in assetsComputed"
+        :key="index"
+        class="single-asset"
+        :[getHasHref(item)]="item.url"
+        target="_blank"
+      >
+        <span class="single-asset-div">{{ item.title || 'Asset ' + index.toString() }}</span>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -21,6 +25,10 @@ export default {
       default: () => {},
     },
     database: {
+      type: Object,
+      required: true,
+    },
+    vodConfig: {
       type: Object,
       required: true,
     },

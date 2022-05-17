@@ -17,7 +17,7 @@
             <h2 class="caro-text-title">{{ item.title }}</h2>
           </div>
           <div class="caro-short-desc">
-            <p class="caro-text-title">{{ item.short_description || '' }}</p>
+            <p class="caro-text-short-desc">{{ item.short_description || '' }}</p>
           </div>
           <SpeakerSection
             v-if="vodConfig.speakerEnabled && item.speakers"

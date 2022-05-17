@@ -4,9 +4,18 @@
       <i class="fas fa-arrow-left"></i> Back
       <!--<router-link class="back-button-link" :to="{ name : 'list' }"> Back</router-link>-->
     </div>
-    <h1 v-if="selected_video_computed.title || title">
-      {{ title || selected_video_computed.title }}
-    </h1>
+    <div
+      class="embed-title-wrapper"
+      :style="{
+        backgroundImage: randomBgImage && randomBgImage.url ? 'url(' + randomBgImage.url + ')' : '',
+      }"
+    >
+      <div class="embed-title-wrapper-inner">
+        <h1 v-if="selected_video_computed.title || title" id="player-title-text">
+          {{ title || selected_video_computed.title }}
+        </h1>
+      </div>
+    </div>
     <div class="embed-container">
       <b-embed
         ref="videoplayer"
@@ -28,6 +37,7 @@
         v-if="vodConfig.assetsEnabled && selected_video_computed.assets"
         :assets="selected_video_computed.assets"
         :database="database"
+        :vod-config="vodConfig"
       ></AssetSection>
       <div class="description-wrapper">
         <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>
@@ -59,6 +69,7 @@ import CommentSection from '@/components/comment_section/CommentSection'
 import SpeakerSection from '@/components/SpeakerSection'
 import AssetSection from '@/components/AssetSection'
 import event_bus from '@/event_bus/event_bus'
+import getUniqueRandomNumbers from '@/utils/getUniqueRandomNumbers'
 
 export default {
   components: {
@@ -112,12 +123,22 @@ export default {
       type: Object,
       required: true,
     },
+    genericImages: {
+      type: Object,
+      default: () => {},
+    },
+    numGenericImages: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
       title: '',
       subtitle: '',
       id: null,
+      randomBgImage: '',
+      ranNum: 0,
     }
   },
   computed: {
@@ -147,6 +168,17 @@ export default {
       } else {
         return ''
       }
+    },
+  },
+  watch: {
+    numGenericImages: {
+      immediate: true,
+      deep: true,
+      handler(newValue, oldValue) {
+        if (!this.randomBgImage && newValue) {
+          this.getRandomImage()
+        }
+      },
     },
   },
   created() {
@@ -184,6 +216,8 @@ export default {
     } catch (error) {
       console.log(error)
     }
+
+    this.getRandomImage()
   },
   methods: {
     setup_vimeo_player() {
@@ -204,6 +238,12 @@ export default {
     likeBtnClicked(event) {
       event_bus.$emit('like-btn-clicked', event)
     },
+    getRandomImage() {
+      if (this.numGenericImages > 0) {
+        this.ranNum = getUniqueRandomNumbers(1, 0, this.numGenericImages)
+        this.randomBgImage = Object.values(this.genericImages)[this.ranNum[0]]
+      }
+    },
   },
 }
 </script>
@@ -214,10 +254,29 @@ export default {
 }
 
 #vod-description {
-  padding: 1em;
+  padding: 0em;
 }
 
 .description-wrapper {
   text-align: left;
+}
+.back-button {
+  display: inline-block;
+  cursor: pointer;
+}
+#player-title-text {
+  color: #fff;
+}
+.embed-title-wrapper {
+  height: 80px;
+}
+.embed-title-wrapper-inner {
+  background-color: #00000078;
+  height: 100%;
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
