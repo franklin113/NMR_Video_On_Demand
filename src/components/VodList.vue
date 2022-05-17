@@ -195,6 +195,9 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-start;
+}
+.search-wrapper {
+  padding-top: 0.7em;
 }
 </style>

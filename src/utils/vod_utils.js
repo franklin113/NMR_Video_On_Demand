@@ -12,7 +12,6 @@ const vod_utils = {
   },
   give_video_player_point(vimeoID, play_percent) {
     //activity, today, item, multiplier, points_arr, uid
-    console.log('running give points')
     let activity = 'on_demand_video'
     let today = ''
     let item = vimeoID.toString()
@@ -135,9 +134,7 @@ const vod_utils = {
   },
 
   group_by(array_of_items_with_category_as_key, key) {
-    console.log('hello')
     let group_items = groupBy(array_of_items_with_category_as_key, (x) => x[key])
-    console.log(group_items)
     return group_items
   },
   add_listener(db_ref, callback) {

@@ -1,29 +1,31 @@
 <template>
   <div id="tag-component">
     <div id="tag-wrapper">
-      <div id="alpha-select">
-        <a
-          v-for="(letter, index) in letters"
-          :key="index"
-          :class="[selectedLetter === letter ? 'active' : '']"
-          class="single-alpha-select"
-        >
-          <input
-            :id="'letter-' + letter"
-            v-model="selectedLetter"
-            class="letter-input"
-            type="radio"
-            :value="letter"
-            style="display: none"
-          />
-          <label :for="'letter-' + letter" class="single-alpha-letter"
-            ><span class="letter-text">{{ letter }}</span>
-            <span v-show="lettersThatHaveTags.has(letter)" class="has-selection">
-              <i class="has-selection-icon fas fa-circle"></i>
-            </span>
-          </label>
-        </a>
-      </div>
+      <transition name="fade">
+        <div v-if="allTags.length > 0" id="alpha-select">
+          <a
+            v-for="(letter, index) in letters"
+            :key="index"
+            :class="[selectedLetter === letter ? 'active' : '']"
+            class="single-alpha-select"
+          >
+            <input
+              :id="'letter-' + letter"
+              v-model="selectedLetter"
+              class="letter-input"
+              type="radio"
+              :value="letter"
+              style="display: none"
+            />
+            <label :for="'letter-' + letter" class="single-alpha-letter"
+              ><span class="letter-text">{{ letter }}</span>
+              <span v-show="lettersThatHaveTags.has(letter)" class="has-selection">
+                <i class="has-selection-icon fas fa-circle"></i>
+              </span>
+            </label>
+          </a>
+        </div>
+      </transition>
       <transition-group id="tag-selector" name="list-complete" tag="div">
         <a
           v-for="(tag, index) in activeTags"
@@ -201,5 +203,16 @@ div#alpha-select {
 .clear-tags.single-tag-a.list-complete-item:active label {
   background-color: rgb(56, 49, 98);
   color: #fff;
+}
+
+/* we will explain what these classes do next! */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
