@@ -5,9 +5,7 @@
         :is="activeComponentName"
         :firestore="firestore"
         :database="database"
-        :sorted-vod="sortedVod"
         :vod-config="vodConfig"
-        :categories="categories"
         :selected-video="selectedVideo"
         :vod-sessions="vodSessions"
         :active-description-id="activeDescriptionId"
@@ -107,53 +105,11 @@ export default {
       const numItems = this.vodConfig.leaderboardCount || 0
       const topX = counters.length > numItems ? counters.slice(0, numItems) : counters
       const topItems = topX.map((item) => {
-        console.log(item)
         return this.vodSessions.find((v) => v.id == item[0])
       })
       return topItems
     },
-    sortedVod: function () {
-      let copy_of_original_videos = this.vodSessions // add a slice if we are sorting the original, we aren't yet
 
-      copy_of_original_videos = copy_of_original_videos.filter((item) => {
-        let is_valid = false
-
-        let permissions_arr = Object.keys(item.permissions || {})
-        if (
-          permissions_arr.length == 0 ||
-          permissions_arr.includes(this.userType) ||
-          this.userType == '' ||
-          this.userType == 'admin'
-        ) {
-          is_valid = true
-        }
-
-        if (item.show === false) {
-          is_valid = false
-        }
-        return is_valid
-      })
-
-      const grouped_vod = vod_utils.group_by(copy_of_original_videos, 'category')
-      if (this.vodConfig.leaderboardEnabled) {
-        grouped_vod.leaderboard = this.topVideos
-      }
-      return grouped_vod
-    },
-    categories: function () {
-      const self = this
-      const filtered_cats =
-        this.vodConfig && this.vodConfig.categories
-          ? Object.values(this.vodConfig.categories).filter((cat) => cat.id in self.sortedVod)
-          : []
-      if (this.vodConfig.leaderboardEnabled) {
-        filtered_cats.unshift({
-          id: 'leaderboard',
-          title: this.vodConfig.leaderboardTitle || 'Top Videos',
-        })
-      }
-      return filtered_cats
-    },
     currentRouteName() {
       return this.$route.name
     },

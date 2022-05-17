@@ -4,11 +4,18 @@
     <div id="filter-section">
       <TagsControl :vod-items="vodSessions"></TagsControl>
       <div class="search-wrapper">
-        <b-form-input
-          id="vod-search-input"
-          v-model="text"
-          placeholder="Enter your name"
-        ></b-form-input>
+        <b-input-group>
+          <b-form-input
+            v-model="searchText"
+            size="md"
+            placeholder="Search"
+            name="query"
+            @keyup.esc="searchText = ''"
+          />
+          <b-input-group-append>
+            <b-button size="sm">Search</b-button>
+          </b-input-group-append>
+        </b-input-group>
       </div>
     </div>
     <CarouselList
@@ -63,6 +70,8 @@ import VodSection from '@/components/VodSection'
 import VideoSwiper from '@/components/VideoSwiper'
 import getUniqueRandomNumbers from '@/utils/getUniqueRandomNumbers'
 import TagsControl from '@/components/TagsControl'
+import vod_utils from '@/utils/vod_utils'
+
 export default {
   components: {
     VodSection,
@@ -71,14 +80,6 @@ export default {
     TagsControl,
   },
   props: {
-    sortedVod: {
-      type: Object,
-      default: () => {},
-    },
-    categories: {
-      type: Array,
-      default: () => [],
-    },
     vodConfig: {
       type: Object,
       default: () => {},
@@ -137,10 +138,63 @@ export default {
         return []
       }
     },
+    sortedVod: function () {
+      let copy_of_original_videos = this.vodSessions // add a slice if we are sorting the original, we aren't yet
+
+      let searchFiltered = copy_of_original_videos.filter((item) => {
+        if (!this.searchText || item.title.toLowerCase().trim().includes(this.searchText)) {
+          return true
+        }
+      })
+
+      searchFiltered = searchFiltered.filter((item) => {
+        let is_valid = false
+
+        let permissions_arr = Object.keys(item.permissions || {})
+        if (
+          permissions_arr.length == 0 ||
+          permissions_arr.includes(this.userType) ||
+          this.userType == '' ||
+          this.userType == 'admin'
+        ) {
+          is_valid = true
+        }
+
+        if (item.show === false) {
+          is_valid = false
+        }
+        return is_valid
+      })
+
+      const grouped_vod = vod_utils.group_by(searchFiltered, 'category')
+      if (this.vodConfig.leaderboardEnabled) {
+        grouped_vod.leaderboard = this.topVideos
+      }
+      return grouped_vod
+    },
+    categories: function () {
+      const self = this
+      const filtered_cats =
+        this.vodConfig && this.vodConfig.categories
+          ? Object.values(this.vodConfig.categories).filter((cat) => cat.id in self.sortedVod)
+          : []
+      if (this.vodConfig.leaderboardEnabled) {
+        filtered_cats.unshift({
+          id: 'leaderboard',
+          title: this.vodConfig.leaderboardTitle || 'Top Videos',
+        })
+      }
+      return filtered_cats
+    },
   },
 }
 </script>
 
 <style scoped>
-
+#filter-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
 </style>
