@@ -12,32 +12,49 @@
     <!-- Text slides with image -->
     <b-carousel-slide v-for="(item, index) in vodItemsComputed" :key="index" :no-wrap="true">
       <div class="caro-text-region">
-        <div class="caro-caption">
-          <div class="caro-title-section">
-            <h2 class="caro-text-title">{{ item.title }}</h2>
+        <router-link
+          :to="{
+            name: VIDEO_PLAYER_ROUTE_NAME,
+            query: {
+              id: item.id,
+            },
+          }"
+        >
+          <div class="caro-caption">
+            <div class="caro-title-section">
+              <h2 class="caro-text-title">{{ item.title }}</h2>
+            </div>
+            <div class="caro-short-desc">
+              <p class="caro-text-short-desc">{{ item.short_description || '' }}</p>
+            </div>
+            <SpeakerSection
+              v-if="vodConfig.speakerEnabled && item.speakers"
+              class="video-item-speaker-section"
+              :speakers="item.speakers"
+              :directory-id="vodConfig.directoryId.toString() || ''"
+              :library-id="vodConfig.libraryId.toString()"
+            ></SpeakerSection>
           </div>
-          <div class="caro-short-desc">
-            <p class="caro-text-short-desc">{{ item.short_description || '' }}</p>
-          </div>
-          <SpeakerSection
-            v-if="vodConfig.speakerEnabled && item.speakers"
-            class="video-item-speaker-section"
-            :speakers="item.speakers"
-            :directory-id="vodConfig.directoryId.toString() || ''"
-            :library-id="vodConfig.libraryId.toString()"
-          ></SpeakerSection>
-        </div>
+        </router-link>
       </div>
       <template #img>
-        <img
-          v-if="item.thumbnail"
-          class="d-block img-fluid w-100 custom-img"
-          width="1024"
-          height="480"
-          :src="item.thumbnail"
-          alt="image slot"
-        />
-        <!-- <img
+        <router-link
+          :to="{
+            name: VIDEO_PLAYER_ROUTE_NAME,
+            query: {
+              id: item.id,
+            },
+          }"
+        >
+          <img
+            v-if="item.thumbnail"
+            class="d-block img-fluid w-100 custom-img"
+            width="1024"
+            height="480"
+            :src="item.thumbnail"
+            alt="image slot"
+          />
+          <!-- <img
           v-else-if="useGenericImg && item.generic_image"
           class="d-block img-fluid w-100 generic-img"
           width="1024"
@@ -45,24 +62,26 @@
           :src="item.generic_image"
           alt="image slot"
         /> -->
-        <div
-          v-else
-          class="caro-item-bg d-block w-100"
-          :class="[item.background_color ? 'has-bg-color' : 'default-bg-color']"
-          :style="{
-            backgroundColor: item.background_color || '#fff',
-            height: '480px',
-            backgroundSize: 'cover',
-            backgroundImage:
-              useGenericImg && item.generic_image ? 'url(' + item.generic_image + ')' : '',
-          }"
-        ></div>
+          <div
+            v-else
+            class="caro-item-bg d-block w-100"
+            :class="[item.background_color ? 'has-bg-color' : 'default-bg-color']"
+            :style="{
+              backgroundColor: item.background_color || '#fff',
+              height: '480px',
+              backgroundSize: 'cover',
+              backgroundImage:
+                useGenericImg && item.generic_image ? 'url(' + item.generic_image + ')' : '',
+            }"
+          ></div>
+        </router-link>
       </template>
     </b-carousel-slide>
   </b-carousel>
 </template>
 
 <script>
+import { LIST_VIEW_ROUTE_NAME, VIDEO_PLAYER_ROUTE_NAME } from '@/router/constants'
 import SpeakerSection from '@/components/SpeakerSection'
 
 export default {
@@ -95,6 +114,7 @@ export default {
         img_height: '1024',
         img_width: '480',
       },
+      VIDEO_PLAYER_ROUTE_NAME,
     }
   },
   computed: {
@@ -124,6 +144,9 @@ export default {
   methods: {
     onSlideStart() {},
     onSlideEnd() {},
+    caroClick(item) {
+      this.$router.push()
+    },
   },
 }
 </script>
@@ -152,5 +175,6 @@ export default {
 .carousel-control-prev,
 .carousel-control-next {
   z-index: 15;
+  width: 5%;
 }
 </style>

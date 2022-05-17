@@ -17,8 +17,11 @@
             style="display: none"
           />
           <label :for="'letter-' + letter" class="single-alpha-letter"
-            ><span class="letter-text">{{ letter }}</span></label
-          >
+            ><span class="letter-text">{{ letter }}</span>
+            <span v-show="lettersThatHaveTags.has(letter)" class="has-selection">
+              <i class="has-selection-icon fas fa-circle"></i>
+            </span>
+          </label>
         </a>
       </div>
       <transition-group id="tag-selector" name="list-complete" tag="div">
@@ -39,6 +42,14 @@
             ><span class="single-tag-text">{{ tag }}</span></label
           >
         </a>
+        <a
+          v-if="selectedTags.length > 0"
+          key="clear"
+          class="clear-tags single-tag-a list-complete-item"
+          @click="clearTags"
+        >
+          <label class="single-tag"><span class="single-tag-text">Clear All</span></label>
+        </a>
       </transition-group>
     </div>
   </div>
@@ -51,42 +62,52 @@ export default {
       type: Array,
       required: true,
     },
+    tagsEnabled: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
       selectedLetter: '',
-      letters: [
-        'a',
-        'b',
-        'c',
-        'd',
-        'e',
-        'f',
-        'g',
-        'h',
-        'i',
-        'j',
-        'k',
-        'l',
-        'm',
-        'n',
-        'o',
-        'p',
-        'q',
-        'r',
-        's',
-        't',
-        'u',
-        'v',
-        'w',
-        'x',
-        'y',
-        'z',
-      ],
+      // letters: [
+      //   'a',
+      //   'b',
+      //   'c',
+      //   'd',
+      //   'e',
+      //   'f',
+      //   'g',
+      //   'h',
+      //   'i',
+      //   'j',
+      //   'k',
+      //   'l',
+      //   'm',
+      //   'n',
+      //   'o',
+      //   'p',
+      //   'q',
+      //   'r',
+      //   's',
+      //   't',
+      //   'u',
+      //   'v',
+      //   'w',
+      //   'x',
+      //   'y',
+      //   'z',
+      // ],
       selectedTags: [],
     }
   },
   computed: {
+    letters() {
+      const letterSet = new Set([])
+
+      this.allTags.forEach((item) => letterSet.add(item[0]))
+      return Array.from(letterSet).sort()
+    },
     allTags() {
       const tagSet = new Set([])
       for (let i of this.vodItems) {
@@ -104,6 +125,18 @@ export default {
     activeTags() {
       return this.allTags.filter((i) => i && i.toLowerCase().trim()[0] === this.selectedLetter)
     },
+    lettersThatHaveTags() {
+      const letterSet = new Set([])
+
+      this.selectedTags.forEach((item) => letterSet.add(item[0]))
+
+      return letterSet
+    },
+  },
+  methods: {
+    clearTags() {
+      this.selectedTags = []
+    },
   },
 }
 </script>
@@ -118,7 +151,6 @@ div#alpha-select {
 .single-alpha-select .single-alpha-letter,
 .single-tag-a .single-tag {
   padding: 1em;
-  background-color: #fff;
   transition: all 0.3s;
 }
 .single-alpha-select.active .single-alpha-letter,
@@ -157,5 +189,17 @@ div#alpha-select {
 }
 .list-complete-leave-active {
   position: absolute;
+}
+.has-selection-icon.fas.fa-circle {
+  font-size: 8px;
+  vertical-align: text-top;
+}
+.has-selection {
+  margin-left: 3px;
+}
+
+.clear-tags.single-tag-a.list-complete-item:active label {
+  background-color: rgb(56, 49, 98);
+  color: #fff;
 }
 </style>
