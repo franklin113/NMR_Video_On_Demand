@@ -1,7 +1,16 @@
 <template>
   <div id="vod-list-component">
     <div id="vod-page-title-section"></div>
-    <TagsControl :vod-items="vodSessions"></TagsControl>
+    <div id="filter-section">
+      <TagsControl :vod-items="vodSessions"></TagsControl>
+      <div class="search-wrapper">
+        <b-form-input
+          id="vod-search-input"
+          v-model="text"
+          placeholder="Enter your name"
+        ></b-form-input>
+      </div>
+    </div>
     <CarouselList
       v-if="showFeaturedItems && vodConfig.featuredVideosSection == 'carousel'"
       :vod-data="featuredItems"
@@ -98,6 +107,11 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  data() {
+    return {
+      searchText: '',
+    }
   },
   computed: {
     showFeaturedItems() {

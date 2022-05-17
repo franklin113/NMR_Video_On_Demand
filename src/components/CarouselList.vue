@@ -22,7 +22,14 @@
         >
           <div class="caro-caption">
             <div class="caro-title-section">
-              <h2 class="caro-text-title">{{ item.title }}</h2>
+              <h2 class="caro-text-title">
+                <span class="caro-title-id">{{
+                  vodConfig.video_id_display_format && item.poster_number
+                    ? vodConfig.video_id_display_format.replace(/\{\{ID\}\}/, item.poster_number)
+                    : ''
+                }}</span>
+                <span class="caro-title-text">{{ item.title }}</span>
+              </h2>
             </div>
             <div class="caro-short-desc">
               <p class="caro-text-short-desc">{{ item.short_description || '' }}</p>
