@@ -223,14 +223,18 @@ export default {
     setup_vimeo_player() {
       const video_url = this.selected_video_url
       console.log(video_url)
-
+      if (!video_url.match(/vimeo.com/)) {
+        return
+      }
       let iframe = $(this.$refs.videoplayer).find('iframe')
-      vod_utils.setup_vimeo_player({
-        iframe,
-        url: window.location.href,
-        title: this.selected_video_computed.title,
-        video_url: this.selected_video_computed.video_url,
-      })
+      if (iframe) {
+        vod_utils.setup_vimeo_player({
+          iframe,
+          url: window.location.href,
+          title: this.selected_video_computed.title,
+          video_url: this.selected_video_computed.video_url,
+        })
+      }
     },
     back_button_clicked() {
       this.$router.push({ name: LIST_VIEW_ROUTE_NAME })
