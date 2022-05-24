@@ -2,7 +2,7 @@
   <div id="vod-list-component">
     <div id="vod-page-title-section"></div>
     <div id="filter-section">
-      <TagsControl :vod-items="vodSessions"></TagsControl>
+      <TagsControl :vod-items="vodSessions" @selected-tags-changed="tagsChanged"></TagsControl>
       <div class="search-wrapper">
         <b-input-group>
           <b-form-input
@@ -29,7 +29,12 @@
       :generic-images="genericImages"
     ></CarouselList>
     <section class="sessions-container">
-      <div v-for="(cat, index) in categories" :key="index" class="vod-category-wrapper">
+      <div
+        v-for="(cat, index) in categories"
+        :key="index"
+        class="vod-category-wrapper"
+        :class="cat.id"
+      >
         <div v-if="cat.show" class="vod-category-header">
           <h1 class="vod-header-text">{{ cat.title }}</h1>
         </div>
@@ -112,6 +117,7 @@ export default {
   data() {
     return {
       searchText: '',
+      selectedTags: [],
     }
   },
   computed: {
@@ -142,11 +148,25 @@ export default {
       let copy_of_original_videos = this.vodSessions // add a slice if we are sorting the original, we aren't yet
 
       let searchFiltered = copy_of_original_videos.filter((item) => {
-        if (!this.searchText || item.title.toLowerCase().trim().includes(this.searchText)) {
+        if (!item.tags || this.selectedTags.length == 0) {
+          return true
+        }
+        const tags = item.tags || []
+        const tagsMatch = Object.keys(tags).some((r) =>
+          this.selectedTags.includes(decodeURIComponent(r))
+        )
+        return tagsMatch
+      })
+      searchFiltered = searchFiltered.filter((item) => {
+        if (
+          !this.searchText ||
+          item.title.toLowerCase().trim().includes(this.searchText.toLowerCase().trim()) ||
+          item.poster_number.toLowerCase().trim().includes(this.searchText.toLowerCase().trim())
+        ) {
           return true
         }
       })
-
+      //100 and hour
       searchFiltered = searchFiltered.filter((item) => {
         let is_valid = false
 
@@ -185,6 +205,12 @@ export default {
         })
       }
       return filtered_cats
+    },
+  },
+  methods: {
+    tagsChanged(evt) {
+      console.log(evt)
+      this.selectedTags = evt
     },
   },
 }
