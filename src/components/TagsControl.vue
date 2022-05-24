@@ -39,6 +39,7 @@
             type="checkbox"
             :value="tag"
             style="display: none"
+            @change="$emit('selected-tags-changed', selectedTags)"
           />
           <label class="single-tag" :for="'tag-' + index.toString()"
             ><span class="single-tag-text">{{ tag }}</span></label
@@ -71,6 +72,7 @@ export default {
   },
   data() {
     return {
+      selectedTags: [],
       selectedLetter: '',
       // letters: [
       //   'a',
@@ -100,7 +102,6 @@ export default {
       //   'y',
       //   'z',
       // ],
-      selectedTags: [],
     }
   },
   computed: {
