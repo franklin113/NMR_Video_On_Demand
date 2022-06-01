@@ -18,6 +18,9 @@
         </b-input-group>
       </div>
     </div>
+    <div v-if="vodConfig.featuredVideosSectionTitle" class="vod-category-header">
+      <h1 class="vod-header-text">{{ vodConfig.featuredVideosSectionTitle }}</h1>
+    </div>
     <CarouselList
       v-if="showFeaturedItems && vodConfig.featuredVideosSection == 'carousel'"
       :vod-data="featuredItems"
@@ -28,6 +31,14 @@
       :random-number-indexes="randomNumberIndexes"
       :generic-images="genericImages"
     ></CarouselList>
+    <VideoSwiper
+      v-else-if="showFeaturedItems && vodConfig.featuredVideosSection == 'slider'"
+      :vod-data="featuredItems"
+      :vod-config="vodConfig"
+      :active-description-id="activeDescriptionId"
+      :current-user-likes="currentUserLikes"
+      :video-like-counters="videoLikeCounters"
+    ></VideoSwiper>
     <section class="sessions-container">
       <div
         v-for="(cat, index) in categories"
@@ -113,6 +124,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    topVideos: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -140,6 +155,12 @@ export default {
         )
         const uniqueVideos = uniqueNums.map((item) => this.vodSessions[item])
         return uniqueVideos
+      } else if (this.vodConfig.featuredVideosSectionQuery == 'likes') {
+        const sortedByLikes = [...this.vodSessions]
+        sortedByLikes.sort((a, b) => {
+          return this.videoLikeCounters[a.id] < this.videoLikeCounters[b.id]
+        })
+        return sortedByLikes.slice(0, this.vodConfig.featuredVideosSectionCount || 5)
       } else {
         return []
       }
@@ -161,6 +182,7 @@ export default {
         if (
           !this.searchText ||
           item.title.toLowerCase().trim().includes(this.searchText.toLowerCase().trim()) ||
+          item.description.toLowerCase().trim().includes(this.searchText.toLowerCase().trim()) ||
           item.poster_number.toLowerCase().trim().includes(this.searchText.toLowerCase().trim())
         ) {
           return true

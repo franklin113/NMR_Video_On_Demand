@@ -34,15 +34,15 @@
             <div class="caro-short-desc">
               <p class="caro-text-short-desc">{{ item.short_description || '' }}</p>
             </div>
-            <SpeakerSection
-              v-if="vodConfig.speakerEnabled && item.speakers"
-              class="video-item-speaker-section"
-              :speakers="item.speakers"
-              :directory-id="vodConfig.directoryId.toString() || ''"
-              :library-id="vodConfig.libraryId.toString()"
-            ></SpeakerSection>
           </div>
         </router-link>
+        <SpeakerSection
+          v-if="vodConfig.speakerEnabled && item.speakers"
+          class="video-item-speaker-section"
+          :speakers="item.speakers"
+          :directory-id="vodConfig.directoryId.toString() || ''"
+          :library-id="vodConfig.libraryId.toString()"
+        ></SpeakerSection>
       </div>
       <template #img>
         <router-link

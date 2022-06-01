@@ -64,7 +64,7 @@ export default {
     },
     getHasHref(item) {
       if (this.directoryId && item.event_attendee_id) {
-        console.log('get href: ', item)
+        // console.log('get href: ', item)
         return 'href'
       } else {
         return null

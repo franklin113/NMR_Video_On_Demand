@@ -20,14 +20,16 @@
             v-show="vodConfig.titlePosition === 'overlay'"
             class="video-title-section title-overlay"
           >
-            <h2 class="session-title">
-              <span class="session-title-id">{{
-                vodConfig.video_id_display_format && session.poster_number
-                  ? vodConfig.video_id_display_format.replace(/\{\{ID\}\}/, session.poster_number)
-                  : ''
-              }}</span>
-              <span class="session-title-text">{{ session.title }}</span>
-            </h2>
+            <div class="title-overlay-content">
+              <h2 class="session-title">
+                <span class="session-title-id">{{
+                  vodConfig.video_id_display_format && session.poster_number
+                    ? vodConfig.video_id_display_format.replace(/\{\{ID\}\}/, session.poster_number)
+                    : ''
+                }}</span>
+                <span class="session-title-text">{{ session.title }}</span>
+              </h2>
+            </div>
             <LikeSection
               :current-user-likes="currentUserLikes"
               :video-like-counters="videoLikeCounters"

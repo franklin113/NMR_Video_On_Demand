@@ -19,6 +19,7 @@
         :random-number-indexes="randomGenericImagesIndexes"
         :generic-images="genericImages"
         :num-generic-images="numGenericImages"
+        :top-videos="topVideos"
       ></component>
     </transition>
     <div id="vod-footer">

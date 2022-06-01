@@ -40,7 +40,10 @@
         :vod-config="vodConfig"
       ></AssetSection>
       <div class="description-wrapper">
-        <p v-if="selected_video_computed.description">{{ selected_video_computed.description }}</p>
+        <p
+          v-if="selected_video_computed.description"
+          v-html="selected_video_computed.description"
+        ></p>
       </div>
     </div>
     <LikeSection
