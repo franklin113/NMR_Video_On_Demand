@@ -166,6 +166,22 @@ export default {
       }
     },
     sortedVod: function () {
+      const cleanup = (str) => str.toLowerCase().trim()
+      const matchSpeakers = (item, str) => {
+        if (
+          item.speakers &&
+          Object.values(item.speakers).findIndex(
+            (sp) =>
+              cleanup(sp.first_name).includes(str) ||
+              cleanup(sp.last_name).includes(str) ||
+              cleanup(sp.email).includes(str)
+          ) > -1
+        ) {
+          return true
+        } else {
+          return false
+        }
+      }
       let copy_of_original_videos = this.vodSessions // add a slice if we are sorting the original, we aren't yet
 
       let searchFiltered = copy_of_original_videos.filter((item) => {
@@ -181,9 +197,11 @@ export default {
       searchFiltered = searchFiltered.filter((item) => {
         if (
           !this.searchText ||
+          item.id.toLowerCase().trim().includes(this.searchText.toLowerCase().trim()) ||
           item.title.toLowerCase().trim().includes(this.searchText.toLowerCase().trim()) ||
           item.description.toLowerCase().trim().includes(this.searchText.toLowerCase().trim()) ||
-          item.poster_number.toLowerCase().trim().includes(this.searchText.toLowerCase().trim())
+          item.poster_number.toLowerCase().trim().includes(this.searchText.toLowerCase().trim()) ||
+          matchSpeakers(item, this.searchText.toLowerCase().trim())
         ) {
           return true
         }
