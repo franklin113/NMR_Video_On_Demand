@@ -9,22 +9,25 @@
         :current-user-likes="currentUserLikes"
         :video-like-counters="videoLikeCounters"
         :active-description-id="activeDescriptionId"
+        :scrollbar="{ draggable: true }"
       ></VideoItem>
     </swiper-slide>
-    <div slot="pagination" class="swiper-pagination"></div>
-    <div slot="button-prev" class="swiper-button-prev"></div>
-    <div slot="button-next" class="swiper-button-next"></div>
+    <div slot="scrollbar" class="swiper-scrollbar"></div>
+    <!-- <div slot="pagination" class="swiper-pagination"></div> -->
+    <!-- <div slot="button-prev" class="swiper-button-prev"></div>
+    <div slot="button-next" class="swiper-button-next"></div> -->
   </swiper>
 </template>
 
 <script>
 import 'swiper/dist/css/swiper.css'
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
+import { Scrollbar, A11y } from 'swiper'
+// import 'swiper/css/swiper.css'
 
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 import VideoItem from '@/components/VideoItem'
-
+// import 'swiper/css/scrollbar'
 export default {
   name: 'HomePage',
   components: {
@@ -57,19 +60,16 @@ export default {
 
   data() {
     return {
-      modules: [Navigation, Pagination, Scrollbar, A11y],
+      modules: [Scrollbar, A11y],
 
       swiperOptions: {
         slidesPerView: 3,
         spaceBetween: 0,
         freeMode: true,
         loop: false,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
         scrollbar: {
           draggable: true,
+          el: '.swiper-scrollbar',
           hide: false,
         },
       },

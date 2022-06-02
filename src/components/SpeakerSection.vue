@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     formatDirectoryUrl(item) {
-      console.log('format directory: ', item)
+      // console.log('format directory: ', item)
       if (item.event_attendee_id) {
         const dirUrl = `/directories/${this.directoryId}/attendee/${item.event_attendee_id}?from=/libraries/${this.libraryId}`
         return dirUrl
