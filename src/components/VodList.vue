@@ -158,7 +158,7 @@ export default {
       } else if (this.vodConfig.featuredVideosSectionQuery == 'likes') {
         const sortedByLikes = [...this.vodSessions]
         sortedByLikes.sort((a, b) => {
-          return this.videoLikeCounters[a.id] < this.videoLikeCounters[b.id]
+          return this.videoLikeCounters[b.id] - this.videoLikeCounters[a.id]
         })
         return sortedByLikes.slice(0, this.vodConfig.featuredVideosSectionCount || 5)
       } else {
