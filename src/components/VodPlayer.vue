@@ -81,6 +81,9 @@ export default {
     SpeakerSection,
     AssetSection,
   },
+  beforeRouteUpdate() {
+    console.log('before route update')
+  },
   props: {
     selectedVideo: {
       type: Object,
