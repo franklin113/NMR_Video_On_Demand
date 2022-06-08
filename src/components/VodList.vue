@@ -182,6 +182,7 @@ export default {
           return false
         }
       }
+
       let copy_of_original_videos = this.vodSessions // add a slice if we are sorting the original, we aren't yet
 
       let searchFiltered = copy_of_original_videos.filter((item) => {
@@ -225,7 +226,8 @@ export default {
         }
         return is_valid
       })
-
+      searchFiltered.sort((a, b) => (a.title > b.title ? 1 : -1))
+      searchFiltered.sort((a, b) => a.idx - b.idx)
       const grouped_vod = vod_utils.group_by(searchFiltered, 'category')
       if (this.vodConfig.leaderboardEnabled) {
         grouped_vod.leaderboard = this.topVideos
