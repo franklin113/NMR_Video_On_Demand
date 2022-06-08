@@ -81,6 +81,9 @@ export default {
     SpeakerSection,
     AssetSection,
   },
+  beforeRouteUpdate() {
+    console.log('before route update')
+  },
   props: {
     selectedVideo: {
       type: Object,
@@ -203,7 +206,7 @@ export default {
       console.log('seting up video player analytics')
       let count = 0
       const vimeoInterval = setInterval(() => {
-        console.log('interval')
+        // console.log('interval')
         let iframe = $(self.$refs.videoplayer).find('iframe')
         if (iframe.length > 0 && self.selected_video_url) {
           console
