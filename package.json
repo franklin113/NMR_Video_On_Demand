@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name VideoOnDemand --filename VideoOnDemand_v1.01 --entry ./src/components/VideoOnDemand.vue",
+    "build": "vue-cli-service build --target lib --name VideoOnDemand --filename VideoOnDemand_v1.02 --entry ./src/components/VideoOnDemand.vue",
     "test:unit": "vue-cli-service test:unit --watchAll",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --fix",
