@@ -281,12 +281,14 @@ export default {
         this.showModal()
         this.setup_vimeo_player()
       } else {
-        this.$router.push({
-          name: VIDEO_PLAYER_ROUTE_NAME,
-          query: {
-            id: this.selectedVideo.id,
-          },
-        })
+        this.$router
+          .push({
+            name: VIDEO_PLAYER_ROUTE_NAME,
+            query: {
+              id: this.selectedVideo.id,
+            },
+          })
+          .catch((err) => err)
       }
     },
     setup_vimeo_player() {

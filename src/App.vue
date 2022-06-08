@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view
+      :key="$route.fullPath"
       :user-data="userData"
       :database="database"
       :firestore="firestore"
